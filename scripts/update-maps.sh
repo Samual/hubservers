@@ -1,9 +1,9 @@
 #!/bin/bash
 
-MAP_LIST_FILE='packagelist-CONTINENT.txt'
-MAP_DIR='~/maps/'
+MAP_LIST_FILE='../packagelist-na.txt'
+MAP_DIR='../maps/'
 
-for local in "$MAP_DIR/*"; do
+for local in $MAP_DIR/*; do
 	MAP=$(basename $local)
 	MAP_PRESENT=0
 	for remote in $(cat $MAP_LIST_FILE); do
@@ -12,14 +12,14 @@ for local in "$MAP_DIR/*"; do
 			MAP_PRESENT=1
 		fi
 	done
-	if [ $MAP_PRESENT -eq 0 ]; then
+	if [ $local != "$MAP_DIR/*" ] && [ $MAP_PRESENT -eq 0 ]; then
 		rm $local
 	fi
 done
 
 for remote in $(cat $MAP_LIST_FILE); do
 	MAP=$(basename $remote)
-	if [ !-f $MAP ]; then
+	if [ ! -f $MAP ]; then
 		wget -qO "$MAP_DIR/$MAP" "$remote"
 	fi
 done
