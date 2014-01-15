@@ -3,6 +3,9 @@ XON_PASS="example"
 XON_DIR="cd $HOME/xonotic/"
 XON_COMMON="./all run dedicated +serverconfig +set \_profile \"$XON_PROFILE\" +set rcon_password \"$XON_PASS\""
 
+XON_MAP_LIST_FILE='../packagelist-na.txt'
+XON_MAP_DIR='../maps/'
+
 alias stopxonotic='killall darkplaces-dedicated -s SIGKILL'
 
 alias start-xon-all='xon-ctf-mh && xon-ctf-wa && xon-ka-mh && xon-ka-wa && xon-priv-1 && xon-priv-2 && xon-tourney &&xon-votable'
