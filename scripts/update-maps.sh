@@ -1,4 +1,5 @@
 #!/bin/bash
+
 for local in $XON_MAP_DIR/*; do
 	MAP=$(basename $local)
 	MAP_PRESENT=0
