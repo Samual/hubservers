@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "update-maps.sh: Beginning package update in \'$XON_MAP_DIR\'"
+
+echo "update-maps.sh: Deleting packages we no longer want..."
 for local in $XON_MAP_DIR/*; do
 	MAP=$(basename $local)
 	MAP_PRESENT=0
@@ -14,6 +17,7 @@ for local in $XON_MAP_DIR/*; do
 	fi
 done
 
+echo "update-maps.sh: Downloading new packages..."
 for remote in $(cat $XON_MAP_LIST_FILE); do
 	MAP=$(basename $remote)
 	if [ ! -f $MAP ]; then
@@ -21,3 +25,5 @@ for remote in $(cat $XON_MAP_LIST_FILE); do
 		wget -qO "$XON_MAP_DIR/$MAP" "$remote"
 	fi
 done
+
+echo "update-maps.sh: Update complete!"
