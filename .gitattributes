@@ -1,0 +1,7 @@
+* -crlf
+*.cfg crlf=input
+*.conf crlf=input
+*.cron crlf=input
+*.gitignore crlf=input
+*.sh crlf=input
+*.txt crlf=input
