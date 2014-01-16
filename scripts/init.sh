@@ -1,3 +1,5 @@
+#!/bin/bash
+
 XON_PROFILE="bitmissile"
 XON_PASS="example"
 XON_GAMEDIR="$HOME/xonotic/"
