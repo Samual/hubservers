@@ -9,10 +9,10 @@ XON_MAP_DIR='../maps/'
 
 alias xon-update-configs='cd $XON_HUBREPO && git stash && git pull && git stash pop'
 
-alias stopxonotic='killall darkplaces-dedicated -s SIGKILL'
+alias xon-stop-servers='killall darkplaces-dedicated -s SIGKILL'
 
-alias start-xon-all='xon-ctf-mh && xon-ctf-wa && xon-ka-mh && xon-ka-wa && xon-priv-1 && xon-priv-2 && xon-tourney &&xon-votable'
-alias start-xon-bitmissile='xon-ctf-mh && xon-ctf-wa && xon-priv-1'
+alias xon-start-servers='xon-ctf-mh && xon-ctf-wa && xon-ka-mh && xon-ka-wa && xon-priv-1 && xon-priv-2 && xon-tourney &&xon-votable'
+alias xon-start-bitmissile='xon-ctf-mh && xon-ctf-wa && xon-priv-1'
 
 alias xon-ctf-mh='cd $XON_GAMEDIR && screen -dmS xon-ctf-mh $XON_COMMON sv-dedicated.cfg -sessionid ctf-mh +set \_dedimode \"ctf\" +set \_dedimutator \"minstahook\" +set \_dedidescription \"CTF Instagib+Hook\"'
 alias xon-ctf-wa='cd $XON_GAMEDIR && screen -dmS xon-ctf-wa $XON_COMMON sv-dedicated.cfg -sessionid ctf-wa +set \_dedimode \"ctf\" +set \_dedimutator \"weaponarena\" +set \_dedidescription \"CTF Weaponarena\"'
