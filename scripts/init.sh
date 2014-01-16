@@ -1,5 +1,4 @@
-#!/bin/bash
-
+# PLACE ~/path/to/this/file/./init.sh IN YOUR ~/.bashrc
 XON_PROFILE="bitmissile"
 XON_PASS="example"
 XON_GAMEDIR="$HOME/xonotic/"
