@@ -6,7 +6,7 @@ XON_HUBREPO="$HOME/hubservers/"
 XON_COMMON="./all run dedicated +serverconfig +set \_profile \"$XON_PROFILE\" +set rcon_password \"$XON_PASS\""
 
 XON_MAP_LIST_FILE='../packagelist-na.txt'
-XON_MAP_DIR='~/xonoticmaps/'
+XON_MAP_DIR='~/xonoticmaps'
 
 alias xon-update-configs='cd $XON_HUBREPO && git stash && git pull && git stash pop'
 alias xon-update-maps='cd $XON_HUBREPO/scripts && ./update-maps.sh'
