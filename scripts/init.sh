@@ -3,7 +3,7 @@ XON_PASS="example"
 XON_DIR="cd $HOME/xonotic/"
 XON_COMMON="./all run dedicated +serverconfig +set \_profile \"$XON_PROFILE\" +set rcon_password \"$XON_PASS\""
 
-XON_MAP_LIST_FILE='../packagelist-na.txt'
+XON_MAP_LIST_FILE='../packagelist-eu.txt'
 XON_MAP_DIR='../maps/'
 
 alias stopxonotic='killall darkplaces-dedicated -s SIGKILL'
