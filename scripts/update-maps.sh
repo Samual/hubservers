@@ -1,31 +1,40 @@
 #!/bin/bash
 
 XON_MAP_LIST_FILE='../packagelist-na.txt'
-XON_MAP_DIR='~/xonoticmaps'
+XON_MAP_DIR="$HOME/xonoticmaps"
 
 echo "update-maps.sh: Beginning package update in '$XON_MAP_DIR'"
 
 echo "update-maps.sh: Deleting packages we no longer want..."
-for local in $XON_MAP_DIR/*; do
+for local in $XON_MAP_DIR/*
+do
 	MAP=$(basename $local)
 	MAP_PRESENT=0
-	for remote in $(cat $XON_MAP_LIST_FILE); do
+	for remote in $(cat $XON_MAP_LIST_FILE)
+	do
 		MAPL=$(basename $remote)
-		if [ "$MAP" == "$MAPL" ]; then
+		if [ "$MAP" == "$MAPL" ]
+		then
 			MAP_PRESENT=1
 		fi
 	done
-	if [ $local != "$XON_MAP_DIR/*" ] && [[ $local == *.pk3 ]] && [ $MAP_PRESENT -eq 0 ]; then
+	if [ $local != "$XON_MAP_DIR/*" ] && [[ $local == *.pk3 ]] && [ $MAP_PRESENT == 0 ]
+	then
+		echo "Deleting $local"
 		rm -v $local
 	fi
 done
 
 echo "update-maps.sh: Downloading new packages..."
-for remote in $(cat $XON_MAP_LIST_FILE); do
+for remote in $(cat $XON_MAP_LIST_FILE)
+do
 	MAP=$(basename $remote)
-	if [ ! -f $MAP ]; then
+	if [ ! -f $XON_MAP_DIR/$MAP ]
+	then
 		echo "Downloading $remote"
-		wget "$remote" -O "$XON_MAP_DIR/$MAP"
+		wget --output-document="$XON_MAP_DIR/$MAP" "$remote"
+	else
+		echo "Already have $remote, skipping"
 	fi
 done
 
