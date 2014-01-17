@@ -1,12 +1,14 @@
 # PLACE ~/path/to/this/file/./init.sh IN YOUR ~/.bashrc
 XON_PROFILE="bitmissile"
 XON_PASS="example"
+
+XON_BASEDIR="$HOME/.xonotic/"
 XON_GAMEDIR="$HOME/xonotic/"
 XON_HUBREPO="$HOME/hubservers/"
-XON_COMMON="./all run dedicated +set \_profile \"$XON_PROFILE\" +set rcon_password \"$XON_PASS\" +serverconfig"
+XON_COMMON="./all run dedicated -basedir \"$XON_BASEDIR\" +set \_profile \"$XON_PROFILE\" +set rcon_password \"$XON_PASS\" +serverconfig"
 
 XON_MAP_LIST_FILE="../packagelist-eu.txt"
-XON_MAP_DIR="$HOME/xonoticmaps"
+XON_MAP_DIR="$XON_BASEDIR/data"
 
 alias xon-update-configs='cd $XON_HUBREPO && git stash && git pull && git stash pop'
 alias xon-update-maps='cd $XON_HUBREPO/scripts && ./update-maps.sh'
