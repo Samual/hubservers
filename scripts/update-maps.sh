@@ -4,7 +4,7 @@ source init.sh
 
 echo "update-maps.sh: Beginning package update in '$XON_MAP_DIR'"
 
-echo "update-maps.sh: Deleting packages we no longer want..."
+echo "update-maps.sh: Checking for packages we no longer want..."
 for local in $XON_MAP_DIR/*
 do
 	MAP=$(basename $local)
@@ -19,7 +19,7 @@ do
 	done
 	if [ $local != "$XON_MAP_DIR/*" ] && [[ $local == *.pk3 ]] && [ $MAP_PRESENT == 0 ]
 	then
-		echo "Deleting $local"
+		#echo "Deleting $local"
 		rm -v $local
 	fi
 done
@@ -31,9 +31,9 @@ do
 	if [ ! -f $XON_MAP_DIR/$MAP ]
 	then
 		echo "Downloading $remote"
-		wget --output-document="$XON_MAP_DIR/$MAP" "$remote"
+		wget --no-verbose --output-document="$XON_MAP_DIR/$MAP" "$remote"
 	else
-		echo "Already have $remote, skipping"
+		echo "Already have $map, skipping"
 	fi
 done
 
