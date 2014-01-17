@@ -14,7 +14,7 @@ http://download.unconnected-clan.de/maps/breath_b7.pk3
 http://download.unconnected-clan.de/maps/campgrounds_beta4.pk3
 http://download.unconnected-clan.de/maps/capturecity-v2r2.pk3
 http://download.unconnected-clan.de/maps/catharsis-v06.pk3
-http://download.unconnected-clan.de/maps/chronic.pk3
+http://download.unconnected-clan.de/maps/chronic_nex.pk3
 http://download.unconnected-clan.de/maps/controlfactor_v3-full-b3a8175f8a477972aeaa9b9abbf0360c0a17df3b-06539d722ef49c2600a79b41132b8a2f3ccced7f.pk3
 http://download.unconnected-clan.de/maps/desertfactory-nex.pk3
 http://download.unconnected-clan.de/maps/distortion-v3-r3.pk3
