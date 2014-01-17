@@ -31,7 +31,7 @@ do
 	if [ ! -f $XON_MAP_DIR/$MAP ]
 	then
 		#echo "Downloading $remote"
-		wget --no-verbose --output-document="$XON_MAP_DIR/$MAP" "$remote"
+		wget --output-document="$XON_MAP_DIR/$MAP" "$remote"
 	else
 		echo "Already have $MAP, skipping"
 	fi
