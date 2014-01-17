@@ -33,7 +33,7 @@ do
 		echo "Downloading $remote"
 		wget --no-verbose --output-document="$XON_MAP_DIR/$MAP" "$remote"
 	else
-		echo "Already have $map, skipping"
+		echo "Already have $MAP, skipping"
 	fi
 done
 
