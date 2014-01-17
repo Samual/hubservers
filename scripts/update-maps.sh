@@ -30,7 +30,7 @@ do
 	MAP=$(basename $remote)
 	if [ ! -f $XON_MAP_DIR/$MAP ]
 	then
-		echo "Downloading $remote"
+		#echo "Downloading $remote"
 		wget --no-verbose --output-document="$XON_MAP_DIR/$MAP" "$remote"
 	else
 		echo "Already have $MAP, skipping"
