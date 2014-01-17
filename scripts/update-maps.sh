@@ -1,7 +1,6 @@
 #!/bin/bash
 
-XON_MAP_LIST_FILE='../packagelist-na.txt'
-XON_MAP_DIR="$HOME/xonoticmaps"
+source init.sh
 
 echo "update-maps.sh: Beginning package update in '$XON_MAP_DIR'"
 
