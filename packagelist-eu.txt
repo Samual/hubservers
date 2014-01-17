@@ -11,7 +11,7 @@ http://download.unconnected-clan.de/maps/azalea-full-ca40fcaa3d78d2edd65ae7ebb7e
 http://download.unconnected-clan.de/maps/bloodrun_a2.pk3
 http://download.unconnected-clan.de/maps/bluez_vs_redz.pk3
 http://download.unconnected-clan.de/maps/breath_b7.pk3
-http://download.unconnected-clan.de/maps/campgrounds_beta4.pk3
+http://download.unconnected-clan.de/maps/campgrounds-beta4.pk3
 http://download.unconnected-clan.de/maps/capturecity-v2r2.pk3
 http://download.unconnected-clan.de/maps/catharsis-v06.pk3
 http://download.unconnected-clan.de/maps/chronic_nex.pk3

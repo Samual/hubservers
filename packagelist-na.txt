@@ -11,7 +11,7 @@ http://mirror.bitmissile.com/xonotic/hub/azalea-full-ca40fcaa3d78d2edd65ae7ebb7e
 http://mirror.bitmissile.com/xonotic/hub/bloodrun_a2.pk3
 http://mirror.bitmissile.com/xonotic/hub/bluez_vs_redz.pk3
 http://mirror.bitmissile.com/xonotic/hub/breath_b7.pk3
-http://mirror.bitmissile.com/xonotic/hub/campgrounds_beta4.pk3
+http://mirror.bitmissile.com/xonotic/hub/campgrounds-beta4.pk3
 http://mirror.bitmissile.com/xonotic/hub/capturecity-v2r2.pk3
 http://mirror.bitmissile.com/xonotic/hub/catharsis-v06.pk3
 http://mirror.bitmissile.com/xonotic/hub/chronic_nex.pk3
