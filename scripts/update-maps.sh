@@ -25,7 +25,7 @@ for remote in $(cat $XON_MAP_LIST_FILE); do
 	MAP=$(basename $remote)
 	if [ ! -f $MAP ]; then
 		echo "Downloading $remote"
-		wget -qO "$XON_MAP_DIR/$MAP" "$remote"
+		wget -o "$XON_MAP_DIR/$MAP" "$remote"
 	fi
 done
 
