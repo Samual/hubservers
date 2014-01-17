@@ -1,6 +1,9 @@
 #!/bin/bash
 
-echo "update-maps.sh: Beginning package update in \'$XON_MAP_DIR\'"
+XON_MAP_LIST_FILE='../packagelist-na.txt'
+XON_MAP_DIR='~/xonoticmaps'
+
+echo "update-maps.sh: Beginning package update in '$XON_MAP_DIR'"
 
 echo "update-maps.sh: Deleting packages we no longer want..."
 for local in $XON_MAP_DIR/*; do
