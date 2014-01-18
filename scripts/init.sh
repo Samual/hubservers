@@ -28,3 +28,10 @@ alias xon-priv-2='cd $XON_GAMEDIR && screen -dmS xon-priv-2 $XON_COMMON sv-priva
 alias xon-tourney='cd $XON_GAMEDIR && screen -dmS xon-tourney $XON_COMMON sv-tourney.cfg -sessionid tourney'
 alias xon-votable='cd $XON_GAMEDIR && screen -dmS xon-votable $XON_COMMON sv-votable.cfg -sessionid votable'
 alias xon-spawnweapons='cd $XON_GAMEDIR && screen -dmS xon-spawnweapons $XON_COMMON sv-spawnweapons.cfg -sessionid spawnweapons'
+
+alias xon-irc-eu-ctf-wa='screen -dmS xon-irc-eu-ctf-wa perl rcon2irc.pl $XON_HUBREPO/rcon2irc/hub-eu-ctf-wa.conf'
+alias xon-irc-eu-ka-mh='screen -dmS xon-irc-eu-ka-mh perl rcon2irc.pl $XON_HUBREPO/rcon2irc/hub-eu-ka-mh.conf'
+alias xon-irc-eu-votable='screen -dmS xon-irc-eu-votable perl rcon2irc.pl $XON_HUBREPO/rcon2irc/hub-eu-votable.conf'
+alias xon-irc-na-ctf-wa='screen -dmS xon-irc-na-ctf-wa perl rcon2irc.pl $XON_HUBREPO/rcon2irc/hub-na-ctf-wa.conf'
+alias xon-irc-na-ka-mh='screen -dmS xon-irc-na-ka-mh perl rcon2irc.pl $XON_HUBREPO/rcon2irc/hub-na-ka-mh.conf'
+alias xon-irc-na-votable='screen -dmS xon-irc-na-votable perl rcon2irc.pl $XON_HUBREPO/rcon2irc/hub-na-votable.conf'
