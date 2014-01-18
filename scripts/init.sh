@@ -5,7 +5,7 @@ XON_PASS="example"
 XON_GAMEDIR="$HOME/xonotic/"
 XON_HUBREPO="$HOME/hubservers/"
 
-XON_MAP_LIST_FILE="../packagelist-eu.txt"
+XON_MAP_LIST_FILE="../packagelist.txt"
 XON_MAP_DIR="$HOME/.xonotic/data"
 
 XON_COMMON="./all run dedicated +set _profile \"$XON_PROFILE\" +set rcon_password \"$XON_PASS\" +serverconfig"
