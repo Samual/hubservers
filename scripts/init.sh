@@ -63,7 +63,7 @@ function _xon-start-explicit() {
 	if [ "$6" == "y" ]
 	then
 		echo "Starting rcon2irc: 'xon-irc-\"$3\"-\"$2\"', 'hub-\"$3\"-\"$2\".conf'"
-		screen -dmS \"xon-irc-$3-$2\" perl rcon2irc.pl \"hub-$3-$2.conf\"
+		screen -dmS xon-irc-"$3"-"$2" perl rcon2irc.pl \"hub-"$3"-"$2".conf\"
 	else
 		echo "Skipping rcon2irc..."
 	fi
@@ -73,7 +73,7 @@ function _xon-start-explicit() {
 	echo "cd $XON_GAMEDIR"
 	cd "$XON_GAMEDIR"
 	echo "Starting Xonotic: \"xon-$2\" \"$2\" \"$3\" \"$4\" \"$5\" \"$DEDIMODE\" \"$DEDIMUTATOR\" \"$DEDITYPE\" \"$DEDIDESC\""
-	screen "$SCREENARGS" \"xon-$2\" \
+	screen "$SCREENARGS" xon-"$2" \
 	./all run dedicated \
 	-sessionid "$2" \
 	+set _profile \""$3"\" \
@@ -146,7 +146,7 @@ function xon-start() {
 		if [ -n "$XON_PROFILE" ]
 		then
 			echo "Launching all servers for '$XON_PROFILE'"
-			_xon-all-$XON_PROFILE
+			_xon-all-"$XON_PROFILE"
 		else
 			echo "XON_PROFILE field was empty?"
 		fi
@@ -157,7 +157,7 @@ function xon-start() {
 		else
 			ATTACHED="n"
 		fi
-		$1 "$ATTACHED"
+		"$1" "$ATTACHED"
 	fi
 }
 
