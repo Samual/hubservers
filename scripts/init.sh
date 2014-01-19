@@ -142,7 +142,7 @@ function xon-start() {
 	# optional: $2: attached
 	if [ $# -eq 0 ]
 	then
-		echo "xon-start: Missing function argument!"
+		echo "xon-start: Incorrect parameters!"
 	elif [ "$1" == "all" ]
 	then
 		if [ -n "$XON_PROFILE" ]
