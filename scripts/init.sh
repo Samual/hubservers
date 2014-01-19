@@ -77,7 +77,7 @@ function _xon-start-explicit() {
 	# finally lets execute the rcon2irc command
 	if [ "$6" == "y" ]
 	then
-		echo "Starting rcon2irc: \"xon-irc-\"$3\"-\"$2\"\", \"hub-\"$3\"-\"$2\".conf\""
+		echo "Starting rcon2irc: 'xon-irc-\"$3\"-\"$2\"', 'hub-\"$3\"-\"$2\".conf'"
 		screen -dmS \"xon-irc-$3-$2\" perl rcon2irc.pl \"hub-$3-$2.conf\"
 	else
 		echo "Skipping rcon2irc..."
@@ -147,7 +147,7 @@ function xon-start() {
 	then
 		if [ -n "$XON_PROFILE" ]
 		then
-			echo "Launching all servers for $XON_PROFILE"
+			echo "Launching all servers for '$XON_PROFILE'"
 			_xon-all-$XON_PROFILE
 		else
 			echo "XON_PROFILE field was empty?"
@@ -163,8 +163,47 @@ function xon-start() {
 	fi
 }
 
+function xon-update-maps() {
+	echo "xon-update-maps: Beginning package update in '$XON_MAP_DIR'"
+	
+	echo "xon-update-maps: Checking for packages we no longer want..."
+	for local in $XON_MAP_DIR/*
+	do
+		MAP=$(basename $local)
+		MAP_PRESENT=0
+		for remote in $(cat $XON_MAP_LIST_FILE)
+		do
+			MAPL=$(basename $remote)
+			if [ "$MAP" == "$MAPL" ]
+			then
+				MAP_PRESENT=1
+			fi
+		done
+		if [ $local != "$XON_MAP_DIR/*" ] && [[ $local == *.pk3 ]] && [ $MAP_PRESENT == 0 ]
+		then
+			#echo "Deleting $local"
+			rm -v $local
+		fi
+	done
+
+	echo "xon-update-maps: Downloading new packages..."
+	for remote in $(cat $XON_MAP_LIST_FILE)
+	do
+		MAP=$(basename $remote)
+		if [ ! -f $XON_MAP_DIR/$MAP ]
+		then
+			#echo "Downloading $remote"
+			wget --output-document="$XON_MAP_DIR/$MAP" "$remote"
+		else
+			echo "Already have '$MAP', skipping"
+		fi
+	done
+
+	echo "xon-update-maps: Update complete!"
+}
+
 alias xon-update-configs='cd $XON_HUBREPO && git stash && git pull && git stash pop'
-alias xon-update-maps='cd $XON_HUBREPO/scripts && ./update-maps.sh'
+#alias xon-update-maps='cd $XON_HUBREPO/scripts && ./update-maps.sh'
 
 alias xon-stop='killall -v -i -s SIGTERM darkplaces-dedicated'
 alias xon-kill='killall -v -i -s SIGKILL darkplaces-dedicated'
