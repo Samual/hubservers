@@ -42,13 +42,8 @@ function _xon-start-explicit() {
 	fi
 	
 	# fill optional values (if applicable)
-	if [[ -z "$7" || -z "$8" || -z "$9" || -z "${10}" ]]
+	if [[ -n "$7" && -n "$8" && -n "$9" && -n "${10}" ]]
 	then
-		DEDIMODE=""
-		DEDIMUTATOR=""
-		DEDITYPE=""
-		DEDIDESC=""
-	else
 		DEDIMODE="+set _dedimode \"$7\""
 		DEDIMUTATOR="+set _dedimutator \"$8\""
 		DEDITYPE="+set _deditype \"$9\""
