@@ -2,6 +2,7 @@
 # PLACE ~/path/to/this/file/./init.sh IN YOUR ~/.bashrc
 XON_PROFILE="bitmissile"
 XON_PASS="example"
+XON_RPASS="example"
 
 XON_IRCENABLED="n"
 
@@ -30,16 +31,17 @@ function _xon-start-explicit() {
 	#  $2: sessionid
 	#  $3: profile
 	#  $4: password
-	#  $5: config
+	#  $5: restricted password
+	#  $6: config
 	# optional arguments:
-	#  $6: irc
-	#  $7: dedimode
-	#  $8: dedimutator
-	#  $9: deditype
-	#  $10: dedidescription
+	#  $7: irc
+	#  $8: dedimode
+	#  $9: dedimutator
+	#  $10: deditype
+	#  $11: dedidescription
 
 	# check parameters
-	if [[ -z "$2" || -z "$3" || -z "$4" || -z "$5" ]]
+	if [[ -z "$2" || -z "$3" || -z "$4" || -z "$5" || -z "$6" ]]
 	then
 		echo "Incorrect parameters for xon-start-explicit!"
 		echo "Input: \"$@\""
@@ -55,19 +57,19 @@ function _xon-start-explicit() {
 	fi
 	
 	# fill optional values (if applicable)
-	if [[ -n "$7" && -n "$8" && -n "$9" && -n "${10}" ]]
+	if [[ -n "$8" && -n "$9" && -n "${10}" && -n "${11}" ]]
 	then
-		DEDIMODE="+set _dedimode \"$7\""
-		DEDIMUTATOR="+set _dedimutator \"$8\""
-		DEDITYPE="+set _deditype \"$9\""
-		DEDIDESC="+set _dedidescription \"${10}\""
+		DEDIMODE="+set _dedimode \"$8\""
+		DEDIMUTATOR="+set _dedimutator \"$9\""
+		DEDITYPE="+set _deditype \"{$10}\""
+		DEDIDESC="+set _dedidescription \"${11}\""
 	fi
 
 	# now that we're done handling arguments/variables, execute
 	# rcon2irc first in case we need to attach the server screen.
 	echo "cd $XON_HUBREPO/rcon2irc"
 	cd "$XON_HUBREPO/rcon2irc"
-	if [ "$6" == "y" ]
+	if [ "$7" == "y" ]
 	then
 		echo "Starting rcon2irc: 'xon-irc-\"$3\"-\"$2\"', 'hub-\"$3\"-\"$2\".conf'"
 		screen -dmS xon-irc-"$3"-"$2" perl rcon2irc.pl \"hub-"$3"-"$2".conf\"
@@ -79,17 +81,17 @@ function _xon-start-explicit() {
 	# note that it is a single command, escaped into multiple lines!
 	echo "cd $XON_GAMEDIR"
 	cd "$XON_GAMEDIR"
-	echo "Starting Xonotic: \"xon-$2\" \"$2\" \"$3\" \"$4\" \"$5\" \"$DEDIMODE\" \"$DEDIMUTATOR\" \"$DEDITYPE\" \"$DEDIDESC\""
+	echo "Starting Xonotic: \"xon-$2\" \"$2\" \"$3\" \"$4\" \"$5\" \"$6\" \"$DEDIMODE\" \"$DEDIMUTATOR\" \"$DEDITYPE\" \"$DEDIDESC\""
 	screen "$SCREENARGS" xon-"$2" \
 	./all run dedicated \
 	-sessionid "$2" \
 	+set _profile \""$3"\" \
 	+set rcon_password \""$4"\" \
-	+serverconfig \""$5"\" \
+	+set rcon_restricted_password \""$5"\" \
+	+serverconfig \""$6"\" \
 	"$DEDIMODE" "$DEDIMUTATOR" "$DEDITYPE" "$DEDIDESC"
 
 	# TODO:
-	# check whether quotes around the config harm anything
 	# check whether the session is already running before starting: $(ps aux | grep -v "grep" | grep "ctfd")
 }
 
@@ -106,10 +108,10 @@ function _xon-start-wrapper() {
 	
 	if [ $# -eq 7 ]
 	then
-		_xon-start-explicit "$1" "$2" "$XON_PROFILE" "$XON_PASS" "$3" "$XON_IRCENABLED" "$4" "$5" "$6" "$7"
+		_xon-start-explicit "$1" "$2" "$XON_PROFILE" "$XON_PASS" "$XON_RPASS" "$3" "$XON_IRCENABLED" "$4" "$5" "$6" "$7"
 	elif [ $# -eq 3 ]
 	then
-		_xon-start-explicit "$1" "$2" "$XON_PROFILE" "$XON_PASS" "$3" "$XON_IRCENABLED"
+		_xon-start-explicit "$1" "$2" "$XON_PROFILE" "$XON_PASS" "$XON_RPASS" "$3" "$XON_IRCENABLED"
 	else
 		echo "_xon-start-wrapper: Incorrect argument count!"
 	fi
