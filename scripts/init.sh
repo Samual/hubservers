@@ -15,12 +15,12 @@ alias xon-update-configs='cd $XON_HUBREPO && git stash && git pull && git stash 
 #alias xon-update-maps='cd $XON_HUBREPO/scripts && ./update-maps.sh'
 
 function stopxonotic() {
-	ps -a -o pid,user,args | grep -v "grep" | grep "sessionid"
+	ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "sessionid"
 	killall -i -s SIGTERM "darkplaces-dedicated"
 }
 
 function killxonotic() {
-	ps -a -o pid,user,args | grep -v "grep" | grep "sessionid"
+	ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "sessionid"
 	killall -i -s SIGKILL "darkplaces-dedicated"
 }
 
