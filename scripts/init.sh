@@ -89,6 +89,7 @@ function _xon-start-explicit() {
 	"$DEDIMODE" "$DEDIMUTATOR" "$DEDITYPE" "$DEDIDESC"
 
 	# TODO:
+	# check whether quotes around the config harm anything
 	# check whether the session is already running before starting: $(ps aux | grep -v "grep" | grep "ctfd")
 }
 
