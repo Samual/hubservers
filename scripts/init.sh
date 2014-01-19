@@ -166,8 +166,8 @@ function xon-start() {
 alias xon-update-configs='cd $XON_HUBREPO && git stash && git pull && git stash pop'
 alias xon-update-maps='cd $XON_HUBREPO/scripts && ./update-maps.sh'
 
-alias xon-stop-servers='killall -i -s SIGTERM darkplaces-dedicated'
-alias xon-kill-servers='killall -i -s SIGKILL darkplaces-dedicated'
+alias xon-stop='killall -v -i -s SIGTERM darkplaces-dedicated'
+alias xon-kill='killall -v -i -s SIGKILL darkplaces-dedicated'
 
 
 
