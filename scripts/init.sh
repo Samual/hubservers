@@ -62,7 +62,7 @@ function _xon-start-explicit() {
 	# now execute the server start command
 	# note that it is a single command, escaped into multiple lines!
 	echo "Starting Xonotic: \"xon-$2\" \"$2\" \"$3\" \"$4\" \"$5\" \"$DEDIMODE\" \"$DEDIMUTATOR\" \"$DEDITYPE\" \"$DEDIDESC\""
-	screen "$SCREENARGS" \"xon-"$2"\" \
+	screen "$SCREENARGS" \"xon-$2\" \
 	./all run dedicated \
 	-sessionid "$2" \
 	+set _profile \""$3"\" \
@@ -78,7 +78,7 @@ function _xon-start-explicit() {
 	if [ "$6" == "y" ]
 	then
 		echo "Starting rcon2irc: \"xon-irc-\"$3\"-\"$2\"\", \"hub-\"$3\"-\"$2\".conf\""
-		screen -dmS \"xon-irc-"$3"-"$2"\" perl rcon2irc.pl \"hub-"$3"-"$2".conf\"
+		screen -dmS \"xon-irc-$3-$2\" perl rcon2irc.pl \"hub-$3-$2.conf\"
 	else
 		echo "Skipping rcon2irc..."
 	fi
@@ -97,6 +97,7 @@ function _xon-start-wrapper() {
 	#  $5: dedimutator
 	#  $6: deditype
 	#  $7: dedidescription
+	
 	if [ $# -eq 7 ]
 	then
 		_xon-start-explicit "$1" "$2" "$XON_PROFILE" "$XON_PASS" "$3" "$XON_IRCENABLED" "$4" "$5" "$6" "$7"
