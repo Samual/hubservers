@@ -11,6 +11,12 @@ XON_HUBREPO="$HOME/hubservers"
 XON_MAP_LIST_FILE="../packagelist.txt"
 XON_MAP_DIR="$HOME/.xonotic/data"
 
+alias xon-update-configs='cd $XON_HUBREPO && git stash && git pull && git stash pop'
+#alias xon-update-maps='cd $XON_HUBREPO/scripts && ./update-maps.sh'
+
+alias xon-stop='killall -v -i -s SIGTERM darkplaces-dedicated'
+alias xon-kill='killall -v -i -s SIGKILL darkplaces-dedicated'
+
 function _xon-start-explicit() {
 	# required arguments:
 	#  $1: attached
@@ -196,23 +202,3 @@ function xon-update-maps() {
 
 	echo "xon-update-maps: Update complete!"
 }
-
-alias xon-update-configs='cd $XON_HUBREPO && git stash && git pull && git stash pop'
-#alias xon-update-maps='cd $XON_HUBREPO/scripts && ./update-maps.sh'
-
-alias xon-stop='killall -v -i -s SIGTERM darkplaces-dedicated'
-alias xon-kill='killall -v -i -s SIGKILL darkplaces-dedicated'
-
-
-
-#alias xon-start-servers='xon-ctf-mh && xon-ctf-wa && xon-ka-mh && xon-ka-wa && xon-priv-1 && xon-priv-2 && xon-tourney &&xon-votable'
-#alias xon-start-bitmissile='xon-ctf-mh && xon-ctf-wa && xon-priv-1'
-
-#alias xon-spawnweapons='cd $XON_GAMEDIR && screen -dmS xon-spawnweapons $XON_COMMON sv-spawnweapons.cfg -sessionid spawnweapons'
-
-#alias xon-irc-eu-ctf-wa='cd $XON_HUBREPO/rcon2irc/ && screen -dmS xon-irc-eu-ctf-wa perl rcon2irc.pl hub-eu-ctf-wa.conf'
-#alias xon-irc-eu-ka-mh='cd $XON_HUBREPO/rcon2irc/ && screen -dmS xon-irc-eu-ka-mh perl rcon2irc.pl hub-eu-ka-mh.conf'
-#alias xon-irc-eu-votable='cd $XON_HUBREPO/rcon2irc/ && screen -dmS xon-irc-eu-votable perl rcon2irc.pl hub-eu-votable.conf'
-#alias xon-irc-na-ctf-wa='cd $XON_HUBREPO/rcon2irc/ && screen -dmS xon-irc-na-ctf-wa perl rcon2irc.pl hub-na-ctf-wa.conf'
-#alias xon-irc-na-ka-mh='cd $XON_HUBREPO/rcon2irc/ && screen -dmS xon-irc-na-ka-mh perl rcon2irc.pl hub-na-ka-mh.conf'
-#alias xon-irc-na-votable='cd $XON_HUBREPO/rcon2irc/ && screen -dmS xon-irc-na-votable perl rcon2irc.pl hub-na-votable.conf'
