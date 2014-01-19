@@ -14,8 +14,15 @@ XON_MAP_DIR="$HOME/.xonotic/data"
 alias xon-update-configs='cd $XON_HUBREPO && git stash && git pull && git stash pop'
 #alias xon-update-maps='cd $XON_HUBREPO/scripts && ./update-maps.sh'
 
-alias xon-stop='killall -v -i -s SIGTERM darkplaces-dedicated'
-alias xon-kill='killall -v -i -s SIGKILL darkplaces-dedicated'
+function stopxonotic() {
+	ps -a -o pid,user,args | grep -v "grep" | grep "sessionid"
+	killall -i -s SIGTERM "darkplaces-dedicated"
+}
+
+function killxonotic() {
+	ps -a -o pid,user,args | grep -v "grep" | grep "sessionid"
+	killall -i -s SIGKILL "darkplaces-dedicated"
+}
 
 function _xon-start-explicit() {
 	# required arguments:
