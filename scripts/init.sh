@@ -56,12 +56,22 @@ function _xon-start-explicit() {
 		DEDIDESC="+set _dedidescription \"${10}\""
 	fi
 
-	# switch to game directory
-	echo "cd $XON_GAMEDIR"
-	cd "$XON_GAMEDIR"
+	# now that we're done handling arguments/variables, execute
+	# rcon2irc first in case we need to attach the server screen.
+	echo "cd $XON_HUBREPO/rcon2irc"
+	cd "$XON_HUBREPO/rcon2irc"
+	if [ "$6" == "y" ]
+	then
+		echo "Starting rcon2irc: 'xon-irc-\"$3\"-\"$2\"', 'hub-\"$3\"-\"$2\".conf'"
+		screen -dmS \"xon-irc-$3-$2\" perl rcon2irc.pl \"hub-$3-$2.conf\"
+	else
+		echo "Skipping rcon2irc..."
+	fi
 
 	# now execute the server start command
 	# note that it is a single command, escaped into multiple lines!
+	echo "cd $XON_GAMEDIR"
+	cd "$XON_GAMEDIR"
 	echo "Starting Xonotic: \"xon-$2\" \"$2\" \"$3\" \"$4\" \"$5\" \"$DEDIMODE\" \"$DEDIMUTATOR\" \"$DEDITYPE\" \"$DEDIDESC\""
 	screen "$SCREENARGS" \"xon-$2\" \
 	./all run dedicated \
@@ -70,19 +80,6 @@ function _xon-start-explicit() {
 	+set rcon_password \""$4"\" \
 	+serverconfig \""$5"\" \
 	"$DEDIMODE" "$DEDIMUTATOR" "$DEDITYPE" "$DEDIDESC"
-
-	# switch to rcon2irc directory
-	echo "cd $XON_HUBREPO/rcon2irc"
-	cd "$XON_HUBREPO/rcon2irc"
-
-	# finally lets execute the rcon2irc command
-	if [ "$6" == "y" ]
-	then
-		echo "Starting rcon2irc: 'xon-irc-\"$3\"-\"$2\"', 'hub-\"$3\"-\"$2\".conf'"
-		screen -dmS \"xon-irc-$3-$2\" perl rcon2irc.pl \"hub-$3-$2.conf\"
-	else
-		echo "Skipping rcon2irc..."
-	fi
 
 	# TODO:
 	# check whether the session is already running before starting: $(ps aux | grep -v "grep" | grep "ctfd")
