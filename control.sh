@@ -17,7 +17,6 @@ XON_MAP_LIST_FILE="../packagelist.txt"
 XON_MAP_DIR="$HOME/.xonotic/data"
 
 alias xon-update-configs='cd $XON_HUBREPO && git stash && git pull && git stash pop'
-#alias xon-update-maps='cd $XON_HUBREPO/scripts && ./update-maps.sh'
 
 function stopxonotic() {
 	ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "sessionid"
