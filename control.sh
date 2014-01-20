@@ -122,6 +122,7 @@ function _xon-start-wrapper() {
 
 # DO NOT CALL THESE DIRECTLY, CALL IT THROUGH THE "xon-start" COMMAND!
 # If a server is added to these lists, its port is effectively used up and cannot be used with any different sessionid
+
 # options (ignore the first one, it is passed to the function):
 #   attached sessionid maxplayers port sv_public server_type commands description extra_votes
 
@@ -134,16 +135,18 @@ function xon-ka-wa()   { _xon-start-wrapper "$1" "ka-wa"   "20" "27104" "1" "pub
 function xon-tourney() { _xon-start-wrapper "$1" "tourney" "32" "27105" "0" "tourney" "duel"             "Tourney" "1"; }
 function xon-votable() { _xon-start-wrapper "$1" "votable" "20" "27106" "1" "public"  "dm"               "Votable" "1"; }
 function xon-private() { _xon-start-wrapper "$1" "private" "32" "27107" "0" "pickup"  "4v4tdm"           "Private" "1"; }
-function xon-lms()     { _xon-start-wrapper "$1" "lms"     "20" "27108" "1" "public"  "lms"              "Last Man Standing" "1"; }
+function xon-lms()     { _xon-start-wrapper "$1" "lms"     "20" "27108" "1" "public"  "lms"              "Last Man Standing" "0"; }
+function xon-ffa()     { _xon-start-wrapper "$1" "ffa"     "20" "27109" "1" "public"  "dm"               "Free For All" "0"
 
 # Special/weekend event servers start at 27500
-function xon-meleelms() { _xon-start-wrapper "$1" "lms" "48" "27500" "1" "public" "lms; meleeonly" "Melee-Only LMS" "0"; }
+function xon-meleelms() { _xon-start-wrapper "$1" "lms"      "48" "27500" "1" "public" "lms; meleeonly"          "LMS Melee-Only" "0"; }
+function xon-ctf-mhn()  { _xon-start-wrapper "$1" "ctf-mhn"  "20" "27501" "1" "public" "ctf; minstahook; nades"  "CTF Instagib Special" "0"; }
 
 
 function _xon-all-bitmissile() {
 	xon-duel "0"
-	#xon-ctf-wa "0"
-	xon-private "0"
+	xon-ctf-wa "0"
+	#xon-private "0"
 	xon-votable "0"
 }
 
