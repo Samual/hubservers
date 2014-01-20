@@ -126,22 +126,22 @@ function _xon-start-wrapper() {
 # options (ignore the first one, it is passed to the function):
 #   attached sessionid maxplayers port sv_public server_type commands description extra_votes
 
-# Persistently returning servers start at port 27100
-function xon-duel()    { _xon-start-wrapper "$1" "duel"    "16" "27100" "1" "pickup"  "duel"             "Duel" "0"; }
-function xon-ctf-mh()  { _xon-start-wrapper "$1" "ctf-mh"  "20" "27101" "1" "public"  "ctf; minstahook"  "CTF Instagib+Hook" "0"; }
-function xon-ctf-wa()  { _xon-start-wrapper "$1" "ctf-wa"  "20" "27102" "1" "public"  "ctf; weaponarena" "CTF Weaponarena" "0"; }
-function xon-ka-mh()   { _xon-start-wrapper "$1" "ka-mh"   "20" "27103" "1" "public"  "ka; minstahook"   "Keepaway Instagib+Hook" "0"; }
-function xon-ka-wa()   { _xon-start-wrapper "$1" "ka-wa"   "20" "27104" "1" "public"  "ka; weaponarena"  "Keepaway Weaponarena" "0"; }
-function xon-tourney() { _xon-start-wrapper "$1" "tourney" "32" "27105" "0" "tourney" "duel"             "Tourney" "1"; }
-function xon-votable() { _xon-start-wrapper "$1" "votable" "20" "27106" "1" "public"  "dm"               "Votable" "1"; }
-function xon-private() { _xon-start-wrapper "$1" "private" "32" "27107" "0" "pickup"  "4v4tdm"           "Private" "1"; }
-function xon-lms()     { _xon-start-wrapper "$1" "lms"     "20" "27108" "1" "public"  "lms"              "Last Man Standing" "0"; }
-function xon-ffa()     { _xon-start-wrapper "$1" "ffa"     "20" "27109" "1" "public"  "dm"               "Free For All" "0"; }
-function xon-ft()      { _xon-start-wrapper "$1" "ft"      "16" "27110" "1" "public"  "ft"               "Freezetag" "0"; }
+# Persistently returning servers start at port 30000
+function xon-duel()    { _xon-start-wrapper "$1" "duel"    "16" "30000" "1" "pickup"  "duel"             "Duel" "0"; }
+function xon-ctf-mh()  { _xon-start-wrapper "$1" "ctf-mh"  "20" "30001" "1" "public"  "ctf; minstahook"  "CTF Instagib+Hook" "0"; }
+function xon-ctf-wa()  { _xon-start-wrapper "$1" "ctf-wa"  "20" "30002" "1" "public"  "ctf; weaponarena" "CTF Weaponarena" "0"; }
+function xon-ka-mh()   { _xon-start-wrapper "$1" "ka-mh"   "20" "30003" "1" "public"  "ka; minstahook"   "Keepaway Instagib+Hook" "0"; }
+function xon-ka-wa()   { _xon-start-wrapper "$1" "ka-wa"   "20" "30004" "1" "public"  "ka; weaponarena"  "Keepaway Weaponarena" "0"; }
+function xon-tourney() { _xon-start-wrapper "$1" "tourney" "32" "30005" "0" "tourney" "duel"             "Tourney" "1"; }
+function xon-votable() { _xon-start-wrapper "$1" "votable" "20" "30006" "1" "public"  "dm"               "Votable" "1"; }
+function xon-private() { _xon-start-wrapper "$1" "private" "32" "30007" "0" "pickup"  "4v4tdm"           "Private" "1"; }
+function xon-lms()     { _xon-start-wrapper "$1" "lms"     "20" "30008" "1" "public"  "lms"              "Last Man Standing" "0"; }
+function xon-ffa()     { _xon-start-wrapper "$1" "ffa"     "20" "30009" "1" "public"  "dm"               "Free For All" "0"; }
+function xon-ft()      { _xon-start-wrapper "$1" "ft"      "16" "30010" "1" "public"  "ft"               "Freezetag" "0"; }
 
-# Special/weekend event servers start at 27500
-function xon-meleelms() { _xon-start-wrapper "$1" "lms"      "48" "27500" "1" "public" "lms; meleeonly"          "LMS Melee-Only" "0"; }
-function xon-ctf-mhn()  { _xon-start-wrapper "$1" "ctf-mhn"  "20" "27501" "1" "public" "ctf; minstahook; nades"  "CTF Instagib Special" "0"; }
+# Special/weekend event servers start at 30500
+function xon-meleelms() { _xon-start-wrapper "$1" "lms"      "48" "30500" "1" "public" "lms; meleeonly"          "LMS Melee-Only" "0"; }
+function xon-ctf-mhn()  { _xon-start-wrapper "$1" "ctf-mhn"  "20" "30501" "1" "public" "ctf; minstahook; nades"  "CTF Instagib Special" "0"; }
 
 # NA- new jersey
 function _xon-all-bitmissile() {
