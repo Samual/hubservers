@@ -61,7 +61,7 @@ function _xon-start-explicit() {
 	hooked_port="+set _hooked_port \"${8}\""
 	hooked_public="+set _hooked_public \"${9}\""
 	hooked_type="+set _hooked_type \"${10}\""
-	hooked_commands="+set _hooked_commands \"${11}\""
+	hooked_commands="+alias _hooked_commands \"${11}\""
 	hooked_desc="+set _hooked_desc \"${12}\""
 	allow_extra_votes="+set _allow_extra_votes \"${13}\""
 
