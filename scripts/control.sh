@@ -33,13 +33,13 @@ function _xon-start-explicit() {
 	#  ${4}: restricted password
 	#  ${5}: config
 	#  ${6}: irc
-	#  ${7}: hooked_profile
-	#  ${8}: hooked_port
-	#  ${9}: hooked_public
-	#  ${10}: hooked_type
-	#  ${11}: hooked_commands
-	#  ${12}: hooked_desc
-	#  ${13}: allow_extra_votes
+	#  ${7}: _hooked_profile
+	#  ${8}: _hooked_port
+	#  ${9}: _hooked_public
+	#  ${10}: _hooked_type
+	#  ${11}: _hooked_commands
+	#  ${12}: _hooked_desc
+	#  ${13}: _allow_extra_votes
 
 	# check parameters
 	if [ $# -ne 13 ]
@@ -57,13 +57,14 @@ function _xon-start-explicit() {
 		SCREENARGS="-dmS"
 	fi
 
-	hooked_profile="+set _hooked_profile \"${7}\""
-	hooked_port="+set _hooked_port \"${8}\""
-	hooked_public="+set _hooked_public \"${9}\""
-	hooked_type="+set _hooked_type \"${10}\""
-	hooked_commands="+alias _hooked_commands \"${11}\""
-	hooked_desc="+set _hooked_desc \"${12}\""
-	allow_extra_votes="+set _allow_extra_votes \"${13}\""
+	_hooked_profile="+set _hooked_profile \"${7}\""
+	_hooked_port="+set _hooked_port \"${8}\""
+	_hooked_public="+set _hooked_public \"${9}\""
+	_hooked_type="+set _hooked_type \"${10}\""
+	_hc="+set _hc_enabled \"${11}\""
+	_hooked_commands="+alias _hooked_commands \"${11}\""
+	_hooked_desc="+set _hooked_desc \"${12}\""
+	_allow_extra_votes="+set _allow_extra_votes \"${13}\""
 
 	# now that we're done handling arguments/variables, execute
 	# rcon2irc first in case we need to attach the server screen.
@@ -81,13 +82,13 @@ function _xon-start-explicit() {
 	# note that it is a single command, escaped into multiple lines!
 	echo "cd $XON_GAMEDIR"
 	cd "$XON_GAMEDIR"
-	echo "Starting Xonotic: \"xon-$2\" \"$2\" \"$3\" \"$4\" \"$5\" \"$hooked_profile\" \"$hooked_port\" \"$hooked_public\" \"$hooked_type\" \"$hooked_commands\" \"$hooked_desc\" \"$allow_extra_votes\""
+	echo "Starting Xonotic: \"xon-$2\" \"$2\" \"$3\" \"$4\" \"$5\" \"$_hooked_profile\" \"$_hooked_port\" \"$_hooked_public\" \"$_hooked_type\" \"$_hooked_commands\" \"$_hooked_desc\" \"$_allow_extra_votes\""
 	screen "$SCREENARGS" xon-"$2" \
 	./all run dedicated \
 	-sessionid "$2" \
 	+set rcon_password \""$3"\" \
 	+set rcon_restricted_password \""$4"\" \
-	"$hooked_profile" "$hooked_port" "$hooked_public" "$hooked_type" "$hooked_commands" "$hooked_desc" "$allow_extra_votes" \
+	"$_hooked_profile" "$_hooked_port" "$_hooked_public" "$_hooked_type" "$_hc_enabled" "$_hooked_commands" "$_hooked_desc" "$_allow_extra_votes" \
 	+serverconfig \""$5"\"
 
 	# TODO:
