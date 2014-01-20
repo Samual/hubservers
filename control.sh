@@ -137,12 +137,13 @@ function xon-votable() { _xon-start-wrapper "$1" "votable" "20" "27106" "1" "pub
 function xon-private() { _xon-start-wrapper "$1" "private" "32" "27107" "0" "pickup"  "4v4tdm"           "Private" "1"; }
 function xon-lms()     { _xon-start-wrapper "$1" "lms"     "20" "27108" "1" "public"  "lms"              "Last Man Standing" "0"; }
 function xon-ffa()     { _xon-start-wrapper "$1" "ffa"     "20" "27109" "1" "public"  "dm"               "Free For All" "0"; }
+function xon-ft()      { _xon-start-wrapper "$1" "ft"      "16" "27110" "1" "public"  "ft"               "Freezetag" "0"; }
 
 # Special/weekend event servers start at 27500
 function xon-meleelms() { _xon-start-wrapper "$1" "lms"      "48" "27500" "1" "public" "lms; meleeonly"          "LMS Melee-Only" "0"; }
 function xon-ctf-mhn()  { _xon-start-wrapper "$1" "ctf-mhn"  "20" "27501" "1" "public" "ctf; minstahook; nades"  "CTF Instagib Special" "0"; }
 
-
+# NA- new jersey
 function _xon-all-bitmissile() {
 	xon-duel "0"
 	xon-ctf-wa "0"
@@ -150,6 +151,7 @@ function _xon-all-bitmissile() {
 	xon-votable "0"
 }
 
+# EU- germany
 function _xon-all-wtwrp() {
 	xon-duel "0"
 	xon-ctf-wa "0"
@@ -158,6 +160,7 @@ function _xon-all-wtwrp() {
 	xon-votable "0"
 }
 
+# AU- queensland
 function _xon-all-smb() {
 	xon-votable "0"
 }
