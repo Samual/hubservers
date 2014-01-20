@@ -129,18 +129,21 @@ function xon-ka-mh()   { _xon-start-wrapper "$1" "ka-mh"   "20" "27000" "1" "pub
 function xon-ka-wa()   { _xon-start-wrapper "$1" "ka-wa"   "20" "27000" "1" "public" "ka; weaponarena"  "Keepaway Weaponarena" "0"; }
 function xon-tourney() { _xon-start-wrapper "$1" "tourney" "32" "27000" "0" "pickup" "duel"             "Tourney" "1"; }
 function xon-votable() { _xon-start-wrapper "$1" "votable" "20" "27000" "1" "public" "dm"               "Votable" "1"; }
+function xon-private() { _xon-start-wrapper "$1" "private" "32" "27000" "0" "pickup" "4v4tdm"           "Private" "1"; }
 function xon-lms()     { _xon-start-wrapper "$1" "lms"     "20" "27000" "1" "public" "lms"              "Last Man Standing" "1"; }
 
 function _xon-all-bitmissile() {
 	xon-duel "0"
-	xon-ctf-wa "0"
+	#xon-ctf-wa "0"
+	xon-private "0"
 	xon-votable "0"
 }
 
 function _xon-all-wtwrp() {
 	xon-duel "0"
 	xon-ctf-wa "0"
-	xon-ka-mh "0"
+	xon-lms "0"
+	xon-private "0"
 	xon-votable "0"
 }
 
