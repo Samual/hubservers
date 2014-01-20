@@ -127,7 +127,7 @@ function _xon-start-wrapper() {
 #   attached sessionid maxplayers port sv_public server_type commands description extra_votes
 
 # Persistently returning servers start at port 27100
-function xon-duel()    { _xon-start-wrapper "$1" "duel"    "16" "27100" "1" "pickup"  "duel"             "Duel" "1"; }
+function xon-duel()    { _xon-start-wrapper "$1" "duel"    "16" "27100" "1" "pickup"  "duel"             "Duel" "0"; }
 function xon-ctf-mh()  { _xon-start-wrapper "$1" "ctf-mh"  "20" "27101" "1" "public"  "ctf; minstahook"  "CTF Instagib+Hook" "0"; }
 function xon-ctf-wa()  { _xon-start-wrapper "$1" "ctf-wa"  "20" "27102" "1" "public"  "ctf; weaponarena" "CTF Weaponarena" "0"; }
 function xon-ka-mh()   { _xon-start-wrapper "$1" "ka-mh"   "20" "27103" "1" "public"  "ka; minstahook"   "Keepaway Instagib+Hook" "0"; }
