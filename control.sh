@@ -1,10 +1,14 @@
 #!/bin/bash
-# PLACE ~/path/to/this/file/./init.sh IN YOUR ~/.bashrc
+
+# to use this file, place this command in your ~/.bashrc:
+#   source /path/to/this/file/control.sh
+
+# edit these options below depending on your platform
 XON_PROFILE="bitmissile"
 XON_PASS="example"
 XON_RPASS="example"
 
-XON_IRCENABLED="n"
+XON_IRCENABLED="0"
 
 XON_GAMEDIR="$HOME/xonotic"
 XON_HUBREPO="$HOME/hubservers"
@@ -123,6 +127,7 @@ function xon-ka-mh()   { _xon-start-wrapper "$1" "ka-mh"   "sv-hookable.cfg" "27
 function xon-ka-wa()   { _xon-start-wrapper "$1" "ka-wa"   "sv-hookable.cfg" "27000" "1" "public" "ka; weaponarena"  "Keepaway Weaponarena" "0"; }
 function xon-tourney() { _xon-start-wrapper "$1" "tourney" "sv-hookable.cfg" "27000" "0" "pickup" "duel"             "Tourney" "1"; }
 function xon-votable() { _xon-start-wrapper "$1" "votable" "sv-hookable.cfg" "27000" "1" "public" "dm"               "Votable" "1"; }
+function xon-votable() { _xon-start-wrapper "$1" "lms"     "sv-hookable.cfg" "27000" "1" "public" "lms"              "Last Man Standing" "1"; }
 
 #function xon-duel()    { _xon-start-wrapper "$1" "duel"    "sv-dedicated.cfg" "duel" "echo"        "pickup" "Duel"; }
 #function xon-ctf-mh()  { _xon-start-wrapper "$1" "ctf-mh"  "sv-dedicated.cfg" "ctf"  "minstahook"  "public" "CTF Instagib+Hook"; }
