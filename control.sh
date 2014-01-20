@@ -136,7 +136,7 @@ function xon-tourney() { _xon-start-wrapper "$1" "tourney" "32" "27105" "0" "tou
 function xon-votable() { _xon-start-wrapper "$1" "votable" "20" "27106" "1" "public"  "dm"               "Votable" "1"; }
 function xon-private() { _xon-start-wrapper "$1" "private" "32" "27107" "0" "pickup"  "4v4tdm"           "Private" "1"; }
 function xon-lms()     { _xon-start-wrapper "$1" "lms"     "20" "27108" "1" "public"  "lms"              "Last Man Standing" "0"; }
-function xon-ffa()     { _xon-start-wrapper "$1" "ffa"     "20" "27109" "1" "public"  "dm"               "Free For All" "0"
+function xon-ffa()     { _xon-start-wrapper "$1" "ffa"     "20" "27109" "1" "public"  "dm"               "Free For All" "0"; }
 
 # Special/weekend event servers start at 27500
 function xon-meleelms() { _xon-start-wrapper "$1" "lms"      "48" "27500" "1" "public" "lms; meleeonly"          "LMS Melee-Only" "0"; }
