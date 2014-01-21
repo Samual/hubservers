@@ -101,13 +101,13 @@ function xon-update-game() {
 
 # gracefully stop the server, saving data
 function stopxonotic() {
-	ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "sessionid"
+	ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print $1 " " $6;}'
 	killall -i -s SIGTERM "darkplaces-dedicated"
 }
 
 # instantly kill the server, not saving data
 function killxonotic() {
-	ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "sessionid"
+	ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print $1 " " $6;}'
 	killall -i -s SIGKILL "darkplaces-dedicated"
 }
 
