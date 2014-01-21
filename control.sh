@@ -26,6 +26,19 @@ XON_MAP_DIR="$HOME/.xonotic/data"
 ## Supporting Functions ##
 ##########################
 
+function xon-update-configs() {
+	cd "$XON_HUBREPO"
+	git stash || { echo "git stash failed, aborting..." ; return; }
+	git pull || { echo "git pull failed, aborting..." ; return; }
+	
+	git stash pop || {
+		echo "git stash failed, aborting..."
+		git diff
+		git stash drop
+		git reset --hard origin/master
+		return
+	}
+}
 alias xon-update-configs='cd $XON_HUBREPO && git stash && git pull && git stash pop'
 
 function xon-update-packages() {
