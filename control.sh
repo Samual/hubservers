@@ -34,16 +34,25 @@ function xon-update-all() {
 
 function xon-update-configs() {
 	cd "$XON_HUBREPO"
-	git stash || { echo "git stash failed, aborting..." ; return; }
-	git pull || { echo "git pull failed, aborting..." ; return; }
-	
-	git stash pop || {
-		echo "git stash failed, aborting..."
-		git diff
-		git stash drop
-		git reset --hard origin/master
-		return
-	}
+
+	# store the result of git stash so that we know how it went for later
+	_stashresult=$(git stash)
+
+	git pull || { echo "xon-update-configs: git pull failed, aborting..." ; return; }
+
+	if [ "$_stashresult" != "No local changes to save" ]
+	then
+		git stash pop || {
+			echo "xon-update-configs: git stash pop failed, removing changes and fixing automatically"
+			git diff
+			git stash drop
+			git reset --hard origin/master
+		}
+	fi
+
+	# now update the control.sh script functions and variables again
+	echo "xon-update-configs: sourcing control.sh"
+	source control.sh
 }
 
 function xon-update-packages() {
