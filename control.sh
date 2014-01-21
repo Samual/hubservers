@@ -1,4 +1,7 @@
 #!/bin/bash
+##########################################
+## Script Information and Configuration ##
+##########################################
 
 # to use this file, place this command in your ~/.bashrc:
 #   source /path/to/this/file/control.sh
@@ -8,21 +11,74 @@ XON_PROFILE="bitmissile"
 XON_PASS="example"
 XON_RPASS="example"
 
+# set this option to 1 if you want the servers to also launch rcon2irc
 XON_IRCENABLED="0"
 
+# set these to the proper directories for your installation
 XON_GAMEDIR="$HOME/xonotic"
 XON_HUBREPO="$HOME/hubservers"
 
 XON_MAP_LIST_FILE="../packagelist.txt"
 XON_MAP_DIR="$HOME/.xonotic/data"
 
+
+##########################
+## Supporting Functions ##
+##########################
+
 alias xon-update-configs='cd $XON_HUBREPO && git stash && git pull && git stash pop'
 
+function xon-update-maps() {
+	echo "xon-update-maps: Beginning package update in '$XON_MAP_DIR'"
+	
+	echo "xon-update-maps: Checking for packages we no longer want..."
+	for local in $XON_MAP_DIR/*
+	do
+		MAP=$(basename $local)
+		MAP_PRESENT=0
+		for remote in $(cat $XON_MAP_LIST_FILE)
+		do
+			MAPL=$(basename $remote)
+			if [ "$MAP" == "$MAPL" ]
+			then
+				MAP_PRESENT=1
+			fi
+		done
+		if [ $local != "$XON_MAP_DIR/*" ] && [[ $local == *.pk3 ]] && [ $MAP_PRESENT == 0 ]
+		then
+			#echo "Deleting $local"
+			rm -v $local
+		fi
+	done
+
+	echo "xon-update-maps: Downloading new packages..."
+	for remote in $(cat $XON_MAP_LIST_FILE)
+	do
+		MAP=$(basename $remote)
+		if [ ! -f $XON_MAP_DIR/$MAP ]
+		then
+			#echo "Downloading $remote"
+			wget --output-document="$XON_MAP_DIR/$MAP" "$remote"
+		else
+			echo "Already have '$MAP', skipping"
+		fi
+	done
+
+	echo "xon-update-maps: Update complete!"
+}
+
+
+##################################
+## Server Dispatching Functions ##
+##################################
+
+# gracefully stop the server, saving data
 function stopxonotic() {
 	ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "sessionid"
 	killall -i -s SIGTERM "darkplaces-dedicated"
 }
 
+# instantly kill the server, not saving data
 function killxonotic() {
 	ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "sessionid"
 	killall -i -s SIGKILL "darkplaces-dedicated"
@@ -120,51 +176,6 @@ function _xon-start-wrapper() {
 	fi
 }
 
-# DO NOT CALL THESE DIRECTLY, CALL IT THROUGH THE "xon-start" COMMAND!
-# If a server is added to these lists, its port is effectively used up and cannot be used with any different sessionid
-
-# options (ignore the first one, it is passed to the function):
-#   attached sessionid maxplayers port sv_public server_type commands description extra_votes
-
-# Persistently returning servers start at port 30000
-function xon-duel()    { _xon-start-wrapper "$1" "duel"    "16" "30000" "1" "pickup"  "duel"             "Duel"                   "0"; }
-function xon-ctf-mh()  { _xon-start-wrapper "$1" "ctf-mh"  "20" "30001" "1" "public"  "ctf; minstahook"  "CTF Instagib+Hook"      "0"; }
-function xon-ctf-wa()  { _xon-start-wrapper "$1" "ctf-wa"  "20" "30002" "1" "public"  "ctf; weaponarena" "CTF Weaponarena"        "0"; }
-function xon-ka-mh()   { _xon-start-wrapper "$1" "ka-mh"   "20" "30003" "1" "public"  "ka; minstahook"   "Keepaway Instagib+Hook" "0"; }
-function xon-ka-wa()   { _xon-start-wrapper "$1" "ka-wa"   "20" "30004" "1" "public"  "ka; weaponarena"  "Keepaway Weaponarena"   "0"; }
-function xon-tourney() { _xon-start-wrapper "$1" "tourney" "32" "30005" "0" "tourney" "duel"             "Tourney"                "1"; }
-function xon-votable() { _xon-start-wrapper "$1" "votable" "20" "30006" "1" "public"  "dm"               "Votable"                "1"; }
-function xon-private() { _xon-start-wrapper "$1" "private" "32" "30007" "0" "pickup"  "4v4tdm"           "Private"                "1"; }
-function xon-lms()     { _xon-start-wrapper "$1" "lms"     "20" "30008" "1" "public"  "lms"              "Last Man Standing"      "0"; }
-function xon-ffa()     { _xon-start-wrapper "$1" "ffa"     "20" "30009" "1" "public"  "dm"               "Free For All"           "0"; }
-function xon-ft()      { _xon-start-wrapper "$1" "ft"      "16" "30010" "1" "public"  "ft"               "Freezetag"              "0"; }
-
-# Special/weekend event servers start at 30500
-function xon-meleelms() { _xon-start-wrapper "$1" "lms"      "48" "30500" "1" "public" "lms; meleeonly"          "LMS Melee-Only"       "0"; }
-function xon-ctf-mhn()  { _xon-start-wrapper "$1" "ctf-mhn"  "20" "30501" "1" "public" "ctf; minstahook; nades"  "CTF Instagib Special" "0"; }
-
-# NA- new jersey
-function _xon-all-bitmissile() {
-	xon-duel "0"
-	xon-ctf-wa "0"
-	#xon-private "0"
-	xon-votable "0"
-}
-
-# EU- germany
-function _xon-all-wtwrp() {
-	xon-duel "0"
-	xon-ctf-wa "0"
-	xon-lms "0"
-	xon-private "0"
-	xon-votable "0"
-}
-
-# AU- queensland
-function _xon-all-smb() {
-	xon-votable "0"
-}
-
 function xon-start() {
 	# required: $1: function
 	# optional: $2: attached
@@ -191,41 +202,114 @@ function xon-start() {
 	fi
 }
 
-function xon-update-maps() {
-	echo "xon-update-maps: Beginning package update in '$XON_MAP_DIR'"
-	
-	echo "xon-update-maps: Checking for packages we no longer want..."
-	for local in $XON_MAP_DIR/*
-	do
-		MAP=$(basename $local)
-		MAP_PRESENT=0
-		for remote in $(cat $XON_MAP_LIST_FILE)
-		do
-			MAPL=$(basename $remote)
-			if [ "$MAP" == "$MAPL" ]
-			then
-				MAP_PRESENT=1
-			fi
-		done
-		if [ $local != "$XON_MAP_DIR/*" ] && [[ $local == *.pk3 ]] && [ $MAP_PRESENT == 0 ]
-		then
-			#echo "Deleting $local"
-			rm -v $local
-		fi
-	done
 
-	echo "xon-update-maps: Downloading new packages..."
-	for remote in $(cat $XON_MAP_LIST_FILE)
-	do
-		MAP=$(basename $remote)
-		if [ ! -f $XON_MAP_DIR/$MAP ]
-		then
-			#echo "Downloading $remote"
-			wget --output-document="$XON_MAP_DIR/$MAP" "$remote"
-		else
-			echo "Already have '$MAP', skipping"
-		fi
-	done
+###################################
+## Premade Server Configurations ##
+###################################
 
-	echo "xon-update-maps: Update complete!"
+# Declaration options:
+#   -attached: Ignore this option, it is passed by the caller as an argument
+#   -sessionid: Specific ID for this server-- note that this must be unique for every server config, no duplicates!
+#   -maxplayers: Maximum player count for the server
+#   -port: Socket port-- note that once a port is used, we cannot use it with a different sessionid again!
+#   -sv_public: Choice of whether the server is visible in serverlist or not
+#   -server_type: Default settings choices (public, pickup, tourney)
+#   -commands: Commands to execute (separated by semicolons) on first load (consult sv-hookable.cfg for details)
+#   -description: Description of server used in hostname and motd
+#   -extra_votes: Allow extra votable options (such as game modes, shuffleteams, etc)
+
+# =========================================
+# Variable game mode servers start at 30000
+function xon-tourney() { _xon-start-wrapper "$1" "tourney" "32" "30001" "0" "tourney" "duel"   "Tourney" "1"; }
+function xon-votable() { _xon-start-wrapper "$1" "votable" "20" "30002" "1" "public"  "dm"     "Votable" "1"; }
+function xon-private() { _xon-start-wrapper "$1" "private" "32" "30003" "0" "pickup"  "4v4tdm" "Private" "1"; }
+
+# Dedicated game mode servers start at 30100, incremented by 20 for each different game mode
+# New game modes (supported here or added to the game) should be added to the end of this list
+
+# assault:30100: Assault
+# no premade server configurations
+
+# ca:30120: Clan Arena
+# no premade server configurations
+
+# ctf:30140: Capture The Flag
+function xon-ctf()    { _xon-start-wrapper "$1" "ctf"    "20" "30140" "1" "public" "ctf"              "CTF Core"          "0"; }
+function xon-ctf-mh() { _xon-start-wrapper "$1" "ctf-mh" "20" "30141" "1" "public" "ctf; minstahook"  "CTF Instagib+Hook" "0"; }
+function xon-ctf-wa() { _xon-start-wrapper "$1" "ctf-wa" "20" "30142" "1" "public" "ctf; weaponarena" "CTF Weaponarena"   "0"; }
+
+# dm:30160: Deathmatch
+function xon-duel()   { _xon-start-wrapper "$1" "duel"   "16" "30160" "1" "pickup" "duel"            "Duel"                       "0"; }
+function xon-ffa()    { _xon-start-wrapper "$1" "ffa"    "20" "30161" "1" "public" "dm"              "Free For All"               "0"; }
+function xon-ffa-mh() { _xon-start-wrapper "$1" "ffa-mh" "20" "30162" "1" "public" "dm; minstahook"  "Free For All Instagib+Hook" "0"; }
+function xon-ffa-wa() { _xon-start-wrapper "$1" "ffa-wa" "20" "30162" "1" "public" "dm; weaponarena" "Free For All Weaponarena"   "0"; }
+
+# dom:30180: Domination
+# no premade server configurations
+
+# ft:30200: Freeze Tag
+function xon-ft()    { _xon-start-wrapper "$1" "ft"    "16" "30200" "1" "public" "ft"              "Freezetag"               "0"; }
+function xon-ft-mh() { _xon-start-wrapper "$1" "ft-mh" "16" "30201" "1" "public" "ft; minstahook"  "Freezetag Instagib+Hook" "0"; }
+function xon-ft-wa() { _xon-start-wrapper "$1" "ft-wa" "16" "30202" "1" "public" "ft; weaponarena" "Freezetag Weaponarena"   "0"; }
+
+# ka:30220: Keepaway
+function xon-ka()    { _xon-start-wrapper "$1" "ka"    "20" "30220" "1" "public" "ka"              "Keepaway"               "0"; }
+function xon-ka-mh() { _xon-start-wrapper "$1" "ka-mh" "20" "30221" "1" "public" "ka; minstahook"  "Keepaway Instagib+Hook" "0"; }
+function xon-ka-wa() { _xon-start-wrapper "$1" "ka-wa" "20" "30222" "1" "public" "ka; weaponarena" "Keepaway Weaponarena"   "0"; }
+
+# kh:30240: Key Hunt
+# no premade server configurations
+
+# lms:30260: Last Man Standing
+function xon-lms() { _xon-start-wrapper "$1" "lms" "20" "30260" "1" "public" "lms" "Last Man Standing" "0"; }
+
+# nb:30280: Nexball
+# no premade server configurations
+
+# ons:30300: Onslaught
+# no premade server configurations
+
+# tdm:30320: Team Deathmatch
+# no premade server configurations
+
+# race:30340: Race
+# no premade server configurations
+
+# cts:30360: Race CTS
+# no premade server configurations
+
+# inv:30380: Invasion
+# no premade server configurations
+
+# ============================================
+# Special/weekend event servers start at 30500
+function xon-lms-melee() { _xon-start-wrapper "$1" "lms-melee" "48" "30500" "1" "public" "lms; meleeonly"         "LMS Melee-Only"       "0"; }
+function xon-ctf-mhn()   { _xon-start-wrapper "$1" "ctf-mhn"   "20" "30501" "1" "public" "ctf; minstahook; nades" "CTF Instagib Special" "0"; }
+function xon-dm-melee()  { _xon-start-wrapper "$1" "dm-melee"  "48" "30502" "1" "public" "dm; meleeonly"          "FFA Melee-Only"       "0"; }
+
+
+#############################
+## Default Server Loadouts ##
+#############################
+
+# NA- new jersey
+function _xon-all-bitmissile() {
+	xon-duel "0"
+	xon-ctf-wa "0"
+	#xon-private "0"
+	xon-votable "0"
+}
+
+# EU- germany
+function _xon-all-wtwrp() {
+	xon-duel "0"
+	xon-ctf-wa "0"
+	xon-lms "0"
+	#xon-private "0"
+	xon-votable "0"
+}
+
+# AU- queensland
+function _xon-all-smb() {
+	xon-votable "0"
 }
