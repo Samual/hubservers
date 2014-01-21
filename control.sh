@@ -108,15 +108,18 @@ function xon-update-game() {
 ## Server Dispatching Functions ##
 ##################################
 
+# list all running xonotic instances
+function lsxonotic() { ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print $1 " " $6;}'; }
+
 # gracefully stop the server, saving data
 function stopxonotic() {
-	ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print $1 " " $6;}'
+	lsxonotic
 	killall -i -s SIGTERM "darkplaces-dedicated"
 }
 
 # instantly kill the server, not saving data
 function killxonotic() {
-	ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print $1 " " $6;}'
+	lsxonotic
 	killall -i -s SIGKILL "darkplaces-dedicated"
 }
 
@@ -146,10 +149,10 @@ function _xon-start-explicit() {
 	fi
 
 	# check whether this session is already running
-	_psoutput=$(ps -a -o pid,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | grep "$2" | awk '{print $1;}')
+	_psoutput=$(lsxonotic | grep "$2" | awk '{print $1;}')
 	if [ -n "$_psoutput" ]
 	then
-		echo "This session is already running, lets kill it with fire!"
+		echo "This session is already running an instance of \"$2\", lets kill it with fire!"
 		kill "$_psoutput"
 	fi
 
