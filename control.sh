@@ -18,7 +18,7 @@ XON_IRCENABLED="0"
 XON_GAMEDIR="$HOME/xonotic"
 XON_HUBREPO="$HOME/hubservers"
 
-XON_MAP_LIST_FILE="../packagelist.txt"
+XON_MAP_LIST_FILE="packagelist.txt"
 XON_MAP_DIR="$HOME/.xonotic/data"
 
 
