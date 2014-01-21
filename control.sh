@@ -30,6 +30,7 @@ function xon-update-all() {
 	xon-update-configs
 	xon-update-packages
 	xon-update-game
+	restartxonotic
 }
 
 function xon-update-configs() {
@@ -112,10 +113,10 @@ function xon-update-game() {
 function lsxonotic() { ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print $1 " " $6;}'; }
 
 function restartxonotic() {
+	echo "restartxonotic: Restarting all servers listed below!"
 	lsxonotic
 	#ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print $1 " " $6;}'
 	_psoutput=$(ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print "xon-start xon-" $6 " 0;";}')
-	echo "Trying some shit: \"$_psoutput\"..."
 	eval $_psoutput
 }
 
