@@ -136,6 +136,14 @@ function _xon-start-explicit() {
 		return
 	fi
 
+	# check whether this session is already running
+	_psoutput=$(ps -a -o pid,args | grep -v "grep" | grep "$2" | awk '{print $1;}')
+	if [ -n "$_psoutput" ]
+	then
+		echo "This session is already running, lets kill it with fire!"
+		kill "$_psoutput"
+	fi
+
 	# is this session going to be attached?
 	if [ "$1" -eq 1 ]
 	then
@@ -178,9 +186,6 @@ function _xon-start-explicit() {
 	+set rcon_restricted_password \""$4"\" \
 	"$_hooked_profile" "$_hooked_players" "$_hooked_port" "$_hooked_public" "$_hooked_type" "$_hc_enabled" "$_hooked_commands" "$_hooked_desc" "$_allow_extra_votes" \
 	+serverconfig \""$5"\"
-
-	# TODO:
-	# check whether the session is already running before starting: $(ps aux | grep -v "grep" | grep "ctfd")
 }
 
 function _xon-start-wrapper() {
