@@ -115,7 +115,6 @@ function lsxonotic() { ps -a -o pid,user,args | grep -v "grep" | grep -v "catchs
 function restartxonotic() {
 	echo "restartxonotic: Restarting all servers listed below!"
 	lsxonotic
-	#ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print $1 " " $6;}'
 	_psoutput=$(ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print "xon-start xon-" $6 " 0;";}')
 	eval $_psoutput
 }
@@ -185,10 +184,10 @@ function _xon-start-explicit() {
 
 	# now that we're done handling arguments/variables, execute
 	# rcon2irc first in case we need to attach the server screen.
-	echo "cd $XON_HUBREPO/rcon2irc"
-	cd "$XON_HUBREPO/rcon2irc"
 	if [ "$6" -eq 1 ]
 	then
+		echo "cd $XON_HUBREPO/rcon2irc"
+		cd "$XON_HUBREPO/rcon2irc"
 		echo "Starting rcon2irc: 'xon-irc-\"$7\"-\"$2\"', 'hub-\"$7\"-\"$2\".conf'"
 		screen -dmS xon-irc-"$7"-"$2" perl rcon2irc.pl \"hub-"$7"-"$2".conf\"
 	else
