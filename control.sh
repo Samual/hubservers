@@ -236,7 +236,7 @@ function xon-start() {
 			echo "XON_PROFILE field was empty?"
 		fi
 	else
-		if [ "$2" -eq 1 ]
+		if [ "$2" == "1" ]
 		then
 			ATTACHED="1"
 		else
