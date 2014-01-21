@@ -8,8 +8,8 @@
 
 # edit these options below depending on your platform
 XON_PROFILE="default"
-XON_PASS="password"
-XON_RPASS="rpassword"
+XON_PASS="admin"
+XON_RPASS="mod"
 
 # set this option to 1 if you want the servers to also launch rcon2irc
 XON_IRCENABLED="0"
