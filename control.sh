@@ -32,7 +32,6 @@ function xon-update-all() {
 	xon-update-configs
 	xon-update-packages
 	xon-update-game
-	restartxonotic
 }
 
 function xon-update-configs() {
@@ -98,7 +97,7 @@ function xon-update-packages() {
 }
 
 function xon-update-game() {
-	stopxonotic
+	killall -s SIGTERM "darkplaces-dedicated"
 	cd "$XON_GAMEDIR"
 	./all clean
 	./all checkout "$XON_BRANCH"
@@ -112,8 +111,9 @@ function xon-update-game() {
 ##################################
 
 # list all running xonotic instances
-function lsxonotic() { ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print $1 " " $6;}'; }
+function lsxonotic() { ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print $1 " xon-" $6;}'; }
 
+# restart all running servers
 function restartxonotic() {
 	echo "restartxonotic: Restarting all servers listed below!"
 	lsxonotic
@@ -121,13 +121,13 @@ function restartxonotic() {
 	eval $_psoutput
 }
 
-# gracefully stop the server, saving data
+# gracefully stop all servers, saving data
 function stopxonotic() {
 	lsxonotic
 	killall -i -s SIGTERM "darkplaces-dedicated"
 }
 
-# instantly kill the server, not saving data
+# instantly kill all servers, not saving data
 function killxonotic() {
 	lsxonotic
 	killall -i -s SIGKILL "darkplaces-dedicated"
