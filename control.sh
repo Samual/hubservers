@@ -18,6 +18,8 @@ XON_IRCENABLED="0"
 XON_GAMEDIR="$HOME/xonotic"
 XON_HUBREPO="$HOME/hubservers"
 
+XON_BRANCH=""
+
 XON_MAP_LIST_FILE="packagelist.txt"
 XON_MAP_DIR="$HOME/.xonotic/data"
 
@@ -99,7 +101,7 @@ function xon-update-game() {
 	stopxonotic
 	cd "$XON_GAMEDIR"
 	./all clean
-	./all checkout
+	./all checkout "$XON_BRANCH"
 	./all update
 	./all compile -c dedicated
 }
