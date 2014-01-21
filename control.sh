@@ -137,7 +137,7 @@ function _xon-start-explicit() {
 	fi
 
 	# check whether this session is already running
-	_psoutput=$(ps -a -o pid,args | grep -v "grep" | grep -v "catchsegv" | grep "$2" | awk '{print $1;}')
+	_psoutput=$(ps -a -o pid,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | grep "$2" | awk '{print $1;}')
 	if [ -n "$_psoutput" ]
 	then
 		echo "This session is already running, lets kill it with fire!"
