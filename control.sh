@@ -28,10 +28,10 @@ XON_MAP_DIR="$HOME/.xonotic/data"
 
 alias xon-update-configs='cd $XON_HUBREPO && git stash && git pull && git stash pop'
 
-function xon-update-maps() {
-	echo "xon-update-maps: Beginning package update in '$XON_MAP_DIR'"
+function xon-update-packages() {
+	echo "xon-update-packages: Beginning package update in '$XON_MAP_DIR'"
 	
-	echo "xon-update-maps: Checking for packages we no longer want..."
+	echo "xon-update-packages: Checking for packages we no longer want..."
 	for local in $XON_MAP_DIR/*
 	do
 		MAP=$(basename $local)
@@ -51,7 +51,7 @@ function xon-update-maps() {
 		fi
 	done
 
-	echo "xon-update-maps: Downloading new packages..."
+	echo "xon-update-packages: Downloading new packages..."
 	for remote in $(cat $XON_MAP_LIST_FILE)
 	do
 		MAP=$(basename $remote)
@@ -64,7 +64,7 @@ function xon-update-maps() {
 		fi
 	done
 
-	echo "xon-update-maps: Update complete!"
+	echo "xon-update-packages: Update complete!"
 }
 
 
