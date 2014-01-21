@@ -26,6 +26,12 @@ XON_MAP_DIR="$HOME/.xonotic/data"
 ## Supporting Functions ##
 ##########################
 
+function xon-update-all() {
+	xon-update-configs
+	xon-update-packages
+	xon-update-game
+}
+
 function xon-update-configs() {
 	cd "$XON_HUBREPO"
 	git stash || { echo "git stash failed, aborting..." ; return; }
@@ -39,7 +45,6 @@ function xon-update-configs() {
 		return
 	}
 }
-alias xon-update-configs='cd $XON_HUBREPO && git stash && git pull && git stash pop'
 
 function xon-update-packages() {
 	echo "xon-update-packages: Beginning package update in '$XON_MAP_DIR'"
@@ -78,6 +83,15 @@ function xon-update-packages() {
 	done
 
 	echo "xon-update-packages: Update complete!"
+}
+
+function xon-update-game() {
+	stopxonotic
+	cd "$XON_GAMEDIR"
+	./all clean
+	./all checkout
+	./all update
+	./all compile -c dedicated
 }
 
 
