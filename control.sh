@@ -111,6 +111,14 @@ function xon-update-game() {
 # list all running xonotic instances
 function lsxonotic() { ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print $1 " " $6;}'; }
 
+function restartxonotic() {
+	lsxonotic
+	#ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print $1 " " $6;}'
+	_psoutput=$(ps -a -o pid,user,args | grep -v "grep" | grep -v "catchsegv" | grep "darkplaces-dedicated" | awk '{print xon-start " xon-" $6 " 0";}')
+	echo "Trying some shit: \"$_psoutput\"..."
+	$_psoutput
+}
+
 # gracefully stop the server, saving data
 function stopxonotic() {
 	lsxonotic
