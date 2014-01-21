@@ -7,9 +7,9 @@
 #   source /path/to/this/file/control.sh
 
 # edit these options below depending on your platform
-XON_PROFILE="bitmissile"
-XON_PASS="example"
-XON_RPASS="example"
+XON_PROFILE="default"
+XON_PASS="password"
+XON_RPASS="rpassword"
 
 # set this option to 1 if you want the servers to also launch rcon2irc
 XON_IRCENABLED="0"
