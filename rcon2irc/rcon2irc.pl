@@ -919,7 +919,7 @@ sub irc_error()
 		$store{irc_nick} = "";
 		schedule sub {
 			my ($timer) = @_;
-			out dp => 0, 'sv_cmd bans', 'status 1', 'log_dest_udp';
+			out dp => 0, 'sv_cmd banlist', 'status 1', 'log_dest_udp';
 			$store{status_waiting} = -1;
 		} => 1;
 		# this will clear irc_error_active
@@ -1529,7 +1529,7 @@ sub cond($)
 	} ],
 
 	# chat: IRC channel -> Xonotic server
-	[ irc => q{:([^! ]*)![^ ]* (?i:PRIVMSG) (?i:(??{$config{irc_channel}})) :(.*)} => sub {
+	[ irc => q{:([^! ]*)![^ ]* (?i:PRIVMSG) (?i:(??{$config{irc_channel}})) :(?i:(??{$store{irc_nick}}))(?: |: ?|, ?)(.*)} => sub {
 		my ($nick, $message) = @_;
 		$nick = color_dpfix $nick;
 			# allow the nickname to contain colors in DP format! Therefore, NO color_irc2dp on the nickname!
@@ -1548,7 +1548,7 @@ sub cond($)
 						# allow the nickname to contain colors in DP format! Therefore, NO color_irc2dp on the nickname!
 					$message = color_irc2dp $message;
 					$message =~ s/(["\\])/\\$1/g;
-					out dp => 0, "rcon2irc_say_as \"$nick on IRC\" \"$message\"";
+					if ($message =~ m/^ACTION/) { $message =~ s/ACTION//; out dp => 0, "rcon2irc_say_as \"^3[IRC] ^4*^3 $nick^7 $message\" \"^3\""; } else { out dp => 0, "rcon2irc_say_as \"^3[IRC] $nick\" \"$message\""; };
 					return 0;
 				} ]
 			:
@@ -1763,7 +1763,7 @@ out dp => 0, 'echo "Unknown command \"rcon2irc_eval\""'; # assume the server has
 # not containing our own IP:port, or by rcon2irc_eval not being a defined command).
 schedule sub {
 	my ($timer) = @_;
-	out dp => 0, 'sv_cmd bans', 'status 1', 'log_dest_udp', 'rcon2irc_eval set dummy 1';
+	out dp => 0, 'sv_cmd banlist', 'status 1', 'log_dest_udp', 'rcon2irc_eval set dummy 1';
 	$store{status_waiting} = -1;
 	schedule $timer => (exists $store{dp_hostname} ? $config{dp_status_delay} : 1);;
 } => 1;
