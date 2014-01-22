@@ -365,7 +365,8 @@ function xon-irc-start() {
 	_xon-irc-start-explicit "bitmissile" "votable"
 	_xon-irc-start-explicit "wtwrp" "duel"
 	_xon-irc-start-explicit "wtwrp" "ctf-wa"
-	_xon-irc-start-explicit "wtwrp" "lms"
+	_xon-irc-start-explicit "wtwrp" "ft"
+	#_xon-irc-start-explicit "wtwrp" "lms"
 	_xon-irc-start-explicit "wtwrp" "votable"
 	_xon-irc-start-explicit "smb" "votable"
 }
@@ -382,7 +383,8 @@ function _xon-all-bitmissile() {
 function _xon-all-wtwrp() {
 	xon-duel "0"
 	xon-ctf-wa "0"
-	xon-lms "0"
+	xon-ft "0"
+	#xon-lms "0"
 	#xon-private "0"
 	xon-votable "0"
 }
