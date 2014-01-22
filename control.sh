@@ -190,8 +190,8 @@ function _xon-start-explicit() {
 	then
 		echo "cd $XON_HUBREPO/rcon2irc"
 		cd "$XON_HUBREPO/rcon2irc"
-		echo "Starting rcon2irc: 'xon-irc-\"$7\"-\"$2\"', 'hub-\"$7\"-\"$2\".conf'"
-		screen -dmS xon-irc-"$7"-"$2" perl rcon2irc.pl \"hub-"$7"-"$2".conf\"
+		echo "Starting rcon2irc: 'xon-irc-$7-$2', 'hub-$7-$2.conf'"
+		screen -dmS xon-irc-$7-$2 perl rcon2irc.pl \"hub-$7-$2.conf\"
 	else
 		echo "Skipping rcon2irc..."
 	fi
