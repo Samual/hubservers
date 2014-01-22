@@ -37,7 +37,7 @@ our %color_team2irc_table = (5 => 4, 14 => 12, 13 => 8, 10 => 13);
 sub color_irc2dp($)
 {
 	my ($message) = @_;
-	$message =~ s/\^/^^/g;
+	$message =~ s/\^/^/g;
 	my $color = 7;
 	$message =~ s{\003(\d\d?)(?:,(\d?\d?))?|(\017)}{
 		# $1 is FG, $2 is BG, but let's ignore BG
@@ -708,7 +708,7 @@ package main;
 use strict;
 use warnings;
 use IO::Select;
-use Digest::SHA;
+#use Digest::SHA;
 use Digest::HMAC;
 use Time::HiRes qw/time/;
 
@@ -724,9 +724,12 @@ our %config = (
 	irc_nick => undef,
 	irc_nick_alternates => "",
 	irc_user => undef,
+	irc_password => "",
 	irc_channel => undef,
 	irc_ping_delay => 120,
 	irc_trigger => "",
+	irc_joinmessage => undef,
+	irc_nickprefix => "",
 
 	irc_nickserv_password => "",
 	irc_nickserv_identify => 'PRIVMSG NickServ :IDENTIFY %2$s',
@@ -744,6 +747,7 @@ our %config = (
 	irc_announce_mapchange => 'always',
 
 	dp_server => undef,
+	dp_game => "Xonotic",
 	dp_secure => 1,
 	dp_secure_challengetimeout => 1,
 	dp_listen => "", 
@@ -752,7 +756,6 @@ our %config = (
 	dp_server_from_wan => "",
 	dp_listen_from_server => "", 
 	dp_utf8_enable => $color_utf8_enable,
-	dp_timinglog => "",
 	irc_local => "",
 
 	irc_admin_password => "",
@@ -760,7 +763,6 @@ our %config = (
 	irc_admin_quote_re => "",
 
 	irc_reconnect_delay => 300,
-	irc_commands => "",
 
 	plugins => "",
 );
@@ -768,11 +770,8 @@ our %config = (
 sub pickip($$)
 {
 	my ($wan, $lan) = @_;
-	# $wan shall override $lan
-	return $lan
-		if not length $wan;
 	return $wan
-		if $wan =~ /:\d+$/; # full override
+		if $wan =~ /:\d+$/;
 	return $wan
 		if $lan !~ /:(\d+)$/;
 	return "$wan:$1";
@@ -791,7 +790,7 @@ sub xon_slotsstring()
 		my $slots_s = ($slots == 1) ? '' : 's';
 		$slotsstr = " ($slots free slot$slots_s)";
 		my $s = pickip($config{dp_server_from_wan}, $config{dp_server});
-		$slotsstr .= "; join now: \002xonotic +connect $s"
+		$slotsstr .= "; join now: \002$config{dp_game} +connect $s"
 			if $slots >= 1 and not $store{lms_blocked};
 	}
 	return $slotsstr;
@@ -920,7 +919,7 @@ sub irc_error()
 		$store{irc_nick} = "";
 		schedule sub {
 			my ($timer) = @_;
-			out dp => 0, 'sv_cmd banlist', 'status 1', 'log_dest_udp';
+			out dp => 0, 'sv_cmd bans', 'status 1', 'log_dest_udp';
 			$store{status_waiting} = -1;
 		} => 1;
 		# this will clear irc_error_active
@@ -1050,6 +1049,7 @@ sub irc_joinstage($)
 		{
 			if($store{irc_quakenet_challenge} =~ /^([0-9a-f]*)\b.*\bHMAC-SHA-256\b/)
 			{
+				use Digest::SHA qw(sha256_hex);
 				my $challenge = $1;
 				my $hash1 = Digest::SHA::sha256_hex(substr $config{irc_quakenet_password}, 0, 10);
 				my $key = Digest::SHA::sha256_hex("@{[lc $config{irc_quakenet_authname}]}:$hash1");
@@ -1064,18 +1064,11 @@ sub irc_joinstage($)
 			# we get here again when Q asks us
 		}
 	}
-
-	for(split / *; */, $store{irc_commands})
-	{
-		s/\$nick/$store{irc_nick}/g;
-		out irc => 1, $_;
-	}
 	
 	# if we get here, we are on IRC
 	$store{irc_joined_channel} = 1;
 	schedule sub {
-		# wait 1 sec to let stuff calm down
-		out irc => 1, "JOIN $config{irc_channel}";
+		out irc => 1, "JOIN $config{irc_channel}", "PRIVMSG $config{irc_channel} $config{irc_joinmessage}";
 	} => 1;
 	return 0;
 }
@@ -1388,10 +1381,7 @@ sub cond($)
 
 		if ($nick eq $store{irc_nick}) {
 			$store{irc_maxlen} = 510 - length($hostmask);
-			if($store{irc_joined_channel} == 1)
-			{
-				$store{irc_joined_channel} = 2;
-			}
+			$store{irc_joined_channel} = 1;
 			print "* detected maximum line length for channel messages: $store{irc_maxlen}\n";
 		}
 
@@ -1469,7 +1459,7 @@ sub cond($)
 	# chat: Xonotic server -> IRC channel
 	[ dp => q{\001(.*?)\^7: (.*)} => sub {
 		my ($nick, $message) = map { color_dp2irc $_ } @_;
-		out irc => 0, "PRIVMSG $config{irc_channel} :<$nick\017> $message";
+		out irc => 0, "PRIVMSG $config{irc_channel} :$config{irc_nickprefix}<$nick\017> $message";
 		return 0;
 	} ],
 
@@ -1539,13 +1529,13 @@ sub cond($)
 	} ],
 
 	# chat: IRC channel -> Xonotic server
-	[ irc => q{:([^! ]*)![^ ]* (?i:PRIVMSG) (?i:(??{$config{irc_channel}})) :(?i:(??{$store{irc_nick}}))(?: |: ?|, ?)(.*)} => sub {
+	[ irc => q{:([^! ]*)![^ ]* (?i:PRIVMSG) (?i:(??{$config{irc_channel}})) :(.*)} => sub {
 		my ($nick, $message) = @_;
 		$nick = color_dpfix $nick;
 			# allow the nickname to contain colors in DP format! Therefore, NO color_irc2dp on the nickname!
 		$message = color_irc2dp $message;
 		$message =~ s/(["\\])/\\$1/g;
-		out dp => 0, "rcon2irc_say_as \"$nick on IRC\" \"$message\"";
+        if ($message =~ m/^ACTION/) { $message =~ s/ACTION//; out dp => 0, "rcon2irc_say_as \"^3[IRC] ^4*^3 $nick^7 $message\" \"^3\""; } else { out dp => 0, "rcon2irc_say_as \"^3[IRC] $nick\" \"$message\""; };
 		return 0;
 	} ],
 
@@ -1729,15 +1719,6 @@ sub cond($)
 		my ($all, $cpu, $lost, $avg, $max, $sdev) = @_;
 		return 0 # don't complain when just on the voting screen
 			if !$store{playing};
-		if(length $config{dp_timinglog})
-		{
-			open my $fh, '>>', $config{dp_timinglog}
-				or warn "open >> $config{dp_timinglog}: $!";
-			print $fh "@{[time]} $cpu $lost $avg $max $sdev $store{slots_active}\n"
-				or warn "print >> $config{dp_timinglog}: $!";
-			close $fh
-				or warn "close >> $config{dp_timinglog}: $!";
-		}
 		return 0 # don't complain if it was less than 0.5%
 			if $lost < 0.5;
 		return 0 # don't complain if nobody is looking
@@ -1748,9 +1729,6 @@ sub cond($)
 			if $store{map_starttime} == $store{timingerror_map_starttime} and $lost <= 2 * $store{timingerror_lost};
 		$store{timingerror_map_starttime} = $store{map_starttime};
 		$store{timingerror_lost} = $lost;
-		out dp => 0, 'rcon2irc_say_as server "There are currently some severe system load problems. The admins have been notified."';
-		out irc => 1, "PRIVMSG $config{irc_channel} :\001ACTION has big trouble on $store{map} after @{[int(time() - $store{map_starttime})]}s: $all\001";
-		#out irc => 1, "PRIVMSG OpBaI :\001ACTION has big trouble on $store{map} after @{[int(time() - $store{map_starttime})]}s: $all\001";
 		return 0;
 	} ],
 );
@@ -1785,7 +1763,7 @@ out dp => 0, 'echo "Unknown command \"rcon2irc_eval\""'; # assume the server has
 # not containing our own IP:port, or by rcon2irc_eval not being a defined command).
 schedule sub {
 	my ($timer) = @_;
-	out dp => 0, 'sv_cmd banlist', 'status 1', 'log_dest_udp', 'rcon2irc_eval set dummy 1';
+	out dp => 0, 'sv_cmd bans', 'status 1', 'log_dest_udp', 'rcon2irc_eval set dummy 1';
 	$store{status_waiting} = -1;
 	schedule $timer => (exists $store{dp_hostname} ? $config{dp_status_delay} : 1);;
 } => 1;
@@ -1802,7 +1780,8 @@ schedule sub {
 	if(exists $store{dp_hostname} && !exists $store{irc_seen_welcome})
 	{
 		$store{irc_nick_requested} = $config{irc_nick};
-		out irc => 1, "NICK $config{irc_nick}", "USER $config{irc_user} localhost localhost :$store{dp_hostname}";
+		out irc => 1, "NICK $config{irc_nick}", "USER $config{irc_user}", "PASS $config{irc_password}";
+	       out dp => 1, "log_dest_udp \"\"";
 		$store{irc_logged_in} = 1;
 		undef $store{irc_maxlen};
 		undef $store{irc_pingtime};
@@ -1811,31 +1790,6 @@ schedule sub {
 	schedule $timer => 1;;
 } => 1;
 
-
-
-# Regularily ping the IRC server to detect if the connection is down. If it is,
-# schedule an IRC error that will cause reconnection later.
-schedule sub {
-	my ($timer) = @_;
-
-	if($store{irc_logged_in})
-	{
-		if(defined $store{irc_pingtime})
-		{
-			# IRC connection apparently broke
-			# so... KILL IT WITH FIRE
-			$channels{system}->send("error irc", 0);
-		}
-		else
-		{
-			# everything is fine, send a new ping
-			$store{irc_pingtime} = time();
-			out irc => 1, "PING $store{irc_pingtime}";
-		}
-	}
-
-	schedule $timer => $config{irc_ping_delay};;
-} => 1;
 
 
 
@@ -1891,8 +1845,6 @@ for(;;)
 					# and if it is a match, handle it.
 					++$handled;
 					my $result = $sub->(@matches);
-					$private = 1
-						if $result < 0;
 					last
 						if $result;
 				}
