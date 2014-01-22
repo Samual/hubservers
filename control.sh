@@ -134,14 +134,14 @@ function killxonotic() {
 }
 
 function _xon-irc-start-explicit() {
-	if [ -f "hub-$1-$2.conf" ]
-	then
 	echo "cd $XON_HUBREPO/rcon2irc"
 	cd "$XON_HUBREPO/rcon2irc"
-	echo "Starting rcon2irc: 'xon-irc-$1-$2', 'hub-$1-$2.conf'"
-	screen -dmS xon-irc-$1-$2 perl rcon2irc.pl \"hub-$1-$2.conf\"
+	if [ -f "hub-$1-$2.conf" ]
+	then
+		echo "Starting rcon2irc: 'xon-irc-$1-$2', 'hub-$1-$2.conf'"
+		screen -dmS xon-irc-$1-$2 perl rcon2irc.pl \"hub-$1-$2.conf\"
 	else
-	echo "Skipping rcon2irc for 'xon-irc-$1-$2'..."
+		echo "Skipping rcon2irc for 'xon-irc-$1-$2'..."
 	fi
 }
 
