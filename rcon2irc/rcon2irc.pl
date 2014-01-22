@@ -1481,7 +1481,7 @@ sub cond($)
 		$store{"playernickraw_byid_$id"} = $nick;
 		$nick = color_dp2irc $nick;
 		my $oldnick = $store{"playernick_byid_$id"};
-		out irc => 0, "PRIVMSG $config{irc_channel} :* $oldnick\017 is now known as $nick";
+		out irc => 0, "PRIVMSG $config{irc_channel} :$config{irc_nickprefix}* $oldnick\017 is now known as $nick";
 		$store{"playernick_byid_$id"} = $nick;
 		return 0;
 	} ],
@@ -1491,7 +1491,7 @@ sub cond($)
 		my ($id, $command) = @_;
 		$command = color_dp2irc $command;
 		my $oldnick = $id ? $store{"playernick_byid_$id"} : "(console)";
-		out irc => 0, "PRIVMSG $config{irc_channel} :* $oldnick\017 calls a vote for \"$command\017\"";
+		out irc => 0, "PRIVMSG $config{irc_channel} :$config{irc_nickprefix}* $oldnick\017 calls a vote for \"$command\017\"";
 		return 0;
 	} ],
 
@@ -1499,7 +1499,7 @@ sub cond($)
 	[ dp => q{:vote:vstop:(\d+)} => sub {
 		my ($id) = @_;
 		my $oldnick = $id ? $store{"playernick_byid_$id"} : "(console)";
-		out irc => 0, "PRIVMSG $config{irc_channel} :* $oldnick\017 stopped the vote";
+		out irc => 0, "PRIVMSG $config{irc_channel} :$config{irc_nickprefix}* $oldnick\017 stopped the vote";
 		return 0;
 	} ],
 
@@ -1507,7 +1507,7 @@ sub cond($)
 	[ dp => q{:vote:vlogin:(\d+)} => sub {
 		my ($id) = @_;
 		my $oldnick = $id ? $store{"playernick_byid_$id"} : "(console)";
-		out irc => 0, "PRIVMSG $config{irc_channel} :* $oldnick\017 logged in as master";
+		out irc => 0, "PRIVMSG $config{irc_channel} :$config{irc_nickprefix}* $oldnick\017 logged in as master";
 		return 0;
 	} ],
 
@@ -1516,7 +1516,7 @@ sub cond($)
 		my ($id, $command) = @_;
 		$command = color_dp2irc $command;
 		my $oldnick = $id ? $store{"playernick_byid_$id"} : "(console)";
-		out irc => 0, "PRIVMSG $config{irc_channel} :* $oldnick\017 used his master status to do \"$command\017\"";
+		out irc => 0, "PRIVMSG $config{irc_channel} :$config{irc_nickprefix}* $oldnick\017 used his master status to do \"$command\017\"";
 		return 0;
 	} ],
 
@@ -1524,7 +1524,7 @@ sub cond($)
 	[ dp => q{:vote:v(yes|no|timeout):(\d+):(\d+):(\d+):(\d+):(-?\d+)} => sub {
 		my ($result, $yes, $no, $abstain, $not, $min) = @_;
 		my $spam = "$yes:$no" . (($min >= 0) ? " ($min needed)" : "") . ", $abstain didn't care, $not didn't vote";
-		out irc => 0, "PRIVMSG $config{irc_channel} :* the vote ended with $result: $spam";
+		out irc => 0, "PRIVMSG $config{irc_channel} :$config{irc_nickprefix}* the vote ended with $result: $spam";
 		return 0;
 	} ],
 
