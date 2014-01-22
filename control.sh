@@ -133,6 +133,23 @@ function killxonotic() {
 	killall -i -s SIGKILL "darkplaces-dedicated"
 }
 
+function _xon-irc-start-explicit() {
+	if [ -f "hub-$1-$2.conf" ]
+	then
+	echo "cd $XON_HUBREPO/rcon2irc"
+	cd "$XON_HUBREPO/rcon2irc"
+	echo "Starting rcon2irc: 'xon-irc-$1-$2', 'hub-$1-$2.conf'"
+	screen -dmS xon-irc-$1-$2 perl rcon2irc.pl \"hub-$1-$2.conf\"
+	else
+	echo "Skipping rcon2irc for 'xon-irc-$1-$2'..."
+	fi
+}
+
+function xon-irc-start() {
+	_xon-irc-start-explicit "bitmissile" "duel"
+	_xon-irc-start-explicit "bitmissile" "ctf-wa"
+}
+
 function _xon-start-explicit() {
 	# arguments
 	#  ${1}: attached
