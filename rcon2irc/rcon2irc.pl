@@ -1153,12 +1153,12 @@ sub cond($)
 			return 0 if !$config{irc_announce_slotsfree};
 			if($full)
 			{
-				out irc => 0, "PRIVMSG $config{irc_channel} :\001ACTION is full!\001";
+				out irc => 0, "PRIVMSG $config{irc_channel} :$config{irc_nickprefix}\001ACTION is full!\001";
 			}
 			else
 			{
 				my $slotsstr = xon_slotsstring();
-				out irc => 0, "PRIVMSG $config{irc_channel} :\001ACTION can be joined again$slotsstr!\001";
+				out irc => 0, "PRIVMSG $config{irc_channel} :$config{irc_nickprefix}\001ACTION can be joined again$slotsstr!\001";
 			}
 		}
 		return 0;
@@ -1571,7 +1571,7 @@ sub cond($)
 		$store{map_starttime} = time();
 		if ($config{irc_announce_mapchange} eq 'always' || ($config{irc_announce_mapchange} eq 'notempty' && $store{slots_active} > 0)) {
 			my $slotsstr = xon_slotsstring();
-			out irc => 0, "PRIVMSG $config{irc_channel} :\00304" . $map . "\017 has begun$slotsstr";
+			out irc => 0, "PRIVMSG $config{irc_channel} :$config{irc_nickprefix}\00304" . $map . "\017 has begun$slotsstr";
 		}
 		delete $store{lms_blocked};
 		return 0;
@@ -1678,7 +1678,7 @@ sub cond($)
 		# make message fit somehow
 		for my $maxnamelen(reverse 3..64)
 		{
-			my $scores_string = "PRIVMSG $config{irc_channel} :\00304" . $s->{map} . "\017 ended:";
+			my $scores_string = "PRIVMSG $config{irc_channel} :$config{irc_nickprefix}\00304" . $s->{map} . "\017 ended:";
 			if($teams_matter)
 			{
 				my $sep = ' ';
@@ -1710,7 +1710,7 @@ sub cond($)
 				return 0;
 			}
 		}
-		out irc => 0, "PRIVMSG $config{irc_channel} :\001ACTION would have LIKED to put the scores here, but they wouldn't fit :(\001";
+		out irc => 0, "PRIVMSG $config{irc_channel} :$config{irc_nickprefix}\001ACTION would have LIKED to put the scores here, but they wouldn't fit :(\001";
 		return 0;
 	} ],
 
