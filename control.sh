@@ -145,11 +145,6 @@ function _xon-irc-start-explicit() {
 	fi
 }
 
-function xon-irc-start() {
-	_xon-irc-start-explicit "bitmissile" "duel"
-	_xon-irc-start-explicit "wtwrp" "duel"
-}
-
 function _xon-start-explicit() {
 	# arguments
 	#  ${1}: attached
@@ -362,6 +357,18 @@ function xon-dm-melee()  { _xon-start-wrapper "$1" "dm-melee"  "48" "30502" "1" 
 #############################
 ## Default Server Loadouts ##
 #############################
+
+# IRC servers hosted on WTWRP
+function xon-irc-start() {
+	_xon-irc-start-explicit "bitmissile" "duel"
+	_xon-irc-start-explicit "bitmissile" "ctf-wa"
+	_xon-irc-start-explicit "bitmissile" "votable"
+	_xon-irc-start-explicit "wtwrp" "duel"
+	_xon-irc-start-explicit "wtwrp" "ctf-wa"
+	_xon-irc-start-explicit "wtwrp" "lms"
+	_xon-irc-start-explicit "wtwrp" "votable"
+	_xon-irc-start-explicit "smb" "votable"
+}
 
 # NA- new jersey
 function _xon-all-bitmissile() {
