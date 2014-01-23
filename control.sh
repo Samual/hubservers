@@ -134,6 +134,13 @@ function killxonotic() {
 }
 
 function _xon-irc-start-explicit() {
+	_psoutput=$(screen -ls | grep "xon-irc-$1-$2" | awk '{print $1;}' | cut -d. -f1)
+	if [ -n "$_psoutput" ]
+	then
+		echo "This session is already running an instance of \"$1-$2\", lets kill it with fire!"
+		kill "$_psoutput"
+	fi
+	
 	echo "cd $XON_HUBREPO/rcon2irc"
 	cd "$XON_HUBREPO/rcon2irc"
 	if [ -f "hub-$1-$2.conf" ]
