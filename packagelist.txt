@@ -45,7 +45,6 @@ http://mapdl.xonotic.eu/samual/hub/monstrosity_a3r1.pk3
 http://mapdl.xonotic.eu/samual/hub/new-station_r1.pk3
 http://mapdl.xonotic.eu/samual/hub/opium_v4.pk3
 http://mapdl.xonotic.eu/samual/hub/overkill.pk3
-http://mapdl.xonotic.eu/samual/hub/pushme.pk3
 http://mapdl.xonotic.eu/samual/hub/reservoir_r6.pk3
 http://mapdl.xonotic.eu/samual/hub/rush_b1.pk3
 http://mapdl.xonotic.eu/samual/hub/skycastle.pk3
@@ -56,8 +55,17 @@ http://mapdl.xonotic.eu/samual/hub/strength-full-09662c4088bd4d518d5201a691adf60
 http://mapdl.xonotic.eu/samual/hub/syntheticv1.pk3
 http://mapdl.xonotic.eu/samual/hub/tarx-full-157f675342264c9d96137e99540a2c32438468d7-51a87f2014827f23de755927835a5e810f010546.pk3
 http://mapdl.xonotic.eu/samual/hub/toxic-full-dc1858b5e5c3e8e676e4e41657e960276ac5b496-bd8eb99d6859bc82a6a57d17beb067d0b0b35a52.pk3
-http://mapdl.xonotic.eu/samual/hub/voll_aufs_maul_v3.pk3
 http://mapdl.xonotic.eu/samual/hub/vorix-full-2b16c973b6361f9af9cebb9968a3949e8402be63-c4f845293950120b9a2e0c7bbd83de357fc8a924.pk3
-http://mapdl.xonotic.eu/samual/hub/warfare-full-e3179028d07ea1026cf963d2e70b4e54045cd2a2-e950d27a800c4c0a6b85e3100e28ce2a8609652e.pk3
 http://mapdl.xonotic.eu/samual/hub/xoylent_ctf-full-84267833720a7ed3431aa4603e1740c37bc2f3e1-ff4ffd8d94c060df8f02a18f62054c86c3110222.pk3
 http://mapdl.xonotic.eu/samual/hub/zenith-full-096a3550172eed11cddef31bbbae0bbedafe44c7-50c089ade44d5200d687c08400eacddf9f93768a.pk3
+http://mapdl.xonotic.eu/samual/hub/cube-assault.pk3
+http://mapdl.xonotic.eu/samual/hub/fortsntowerassault.pk3
+http://mapdl.xonotic.eu/samual/hub/safe-district_v2.pk3
+http://mapdl.xonotic.eu/samual/hub/warehouses-b1.pk3
+http://mapdl.xonotic.eu/samual/hub/heavy_metal_final.pk3
+http://mapdl.xonotic.eu/samual/hub/voll_aufs_maul_v4.pk3
+http://mapdl.xonotic.eu/samual/hub/stone_castle_ctf_v1r1.pk3
+http://mapdl.xonotic.eu/samual/hub/pushme-full-xxx.pk3
+http://mapdl.xonotic.eu/samual/hub/warfare_v4.pk3
+http://mapdl.xonotic.eu/samual/hub/lostworld.pk3
+http://mapdl.xonotic.eu/samual/hub/toxicity.pk3
