@@ -69,3 +69,4 @@ http://mapdl.xonotic.eu/samual/hub/pushme-full-xxx.pk3
 http://mapdl.xonotic.eu/samual/hub/warfare_v4.pk3
 http://mapdl.xonotic.eu/samual/hub/lostworld.pk3
 http://mapdl.xonotic.eu/samual/hub/toxicity.pk3
+http://mapdl.xonotic.eu/samual/hub/x-evilspaceremix_beta_04.pk3
