@@ -356,9 +356,10 @@ function xon-lms() { _xon-start-wrapper "$1" "lms" "20" "30260" "1" "public" "lm
 
 # ============================================
 # Special/weekend event servers start at 30500
-function xon-lms-melee() { _xon-start-wrapper "$1" "lms-melee" "48" "30500" "1" "public" "lms; meleeonly"         "LMS Melee-Only"       "0"; }
-function xon-ctf-mhn()   { _xon-start-wrapper "$1" "ctf-mhn"   "20" "30501" "1" "public" "ctf; minstahook; nades" "CTF Instagib Special" "0"; }
-function xon-dm-melee()  { _xon-start-wrapper "$1" "dm-melee"  "48" "30502" "1" "public" "dm; meleeonly"          "FFA Melee-Only"       "0"; }
+function xon-lms-melee()   { _xon-start-wrapper "$1" "lms-melee"   "48" "30500" "1" "public" "lms; meleeonly"         "LMS Melee-Only"              "0"; }
+function xon-ctf-mhn()     { _xon-start-wrapper "$1" "ctf-mhn"     "20" "30501" "1" "public" "ctf; minstahook; nades" "CTF Instagib Special"        "0"; }
+function xon-dm-melee()    { _xon-start-wrapper "$1" "dm-melee"    "48" "30502" "1" "public" "dm; meleeonly"          "FFA Melee-Only"              "0"; }
+function xon-dm-fragfest() { _xon-start-wrapper "$1" "dm-fragfest" "48" "30503" "0" "public" "dm; weaponarena"        "Deathmatch Fragfest Special" "0"; }
 
 
 #############################
@@ -376,7 +377,8 @@ function xon-irc-start() {
 	#_xon-irc-start-explicit "wtwrp" "lms"
 	_xon-irc-start-explicit "wtwrp" "private"
 	#_xon-irc-start-explicit "wtwrp" "votable"
-	_xon-irc-start-explicit "smb" "votable"
+	_xon-irc-start-explicit "wtwrp" "dm-fragfest"
+	#_xon-irc-start-explicit "smb" "votable"
 }
 
 # NA- new jersey
