@@ -6,7 +6,7 @@ other people to use and expand upon them for their own servers if they please.
 
 HUB server set up instructions:
 
-Step 1: Confirm prerequisits:
+Step 1: Confirm prerequisites:
  - Linux server containing build essentials, screen, and git utilities (Ask the owner of the server for dependencies)
  - Shell access to server (Ask the owner of the server)
  - Access to the hubservers github repository (Get a github account and ask Samual)
